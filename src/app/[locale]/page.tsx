@@ -100,6 +100,7 @@ export default function Home({ params: { locale } }: { params: { locale: string 
             <p>{tIoT('sectionSubtitle')}</p>
           </div>
 
+          <div className="iot-grid">
             <div className="clean-card iot-card" style={{ padding: 0 }}>
               <img src="/media/iot/iot-1.jpeg" alt="Sensors" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <div style={{ padding: '1.5rem' }}>
