@@ -69,25 +69,45 @@ export default function Home({ params: { locale } }: { params: { locale: string 
           </div>
           
           <div className="mes-grid">
-            <div className="clean-card">
-              <Settings className="card-icon" size={32} />
-              <h3>{tMES('card1Title')}</h3>
-              <p>{tMES('card1Text')}</p>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/mes-c1.jpeg" alt="OEE" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Settings size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card1Title')}</h3>
+                  <p>{tMES('card1Text')}</p>
+                </div>
+              </div>
             </div>
-            <div className="clean-card">
-              <Activity className="card-icon" size={32} />
-              <h3>{tMES('card2Title')}</h3>
-              <p>{tMES('card2Text')}</p>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/mes-c2.jpeg" alt="Audits" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Activity size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card2Title')}</h3>
+                  <p>{tMES('card2Text')}</p>
+                </div>
+              </div>
             </div>
-            <div className="clean-card">
-              <Layers className="card-icon" size={32} />
-              <h3>{tMES('card4Title')}</h3>
-              <p>{tMES('card4Text')}</p>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/mes-c3.jpeg" alt="HR/9-Box" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Layers size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card4Title')}</h3>
+                  <p>{tMES('card4Text')}</p>
+                </div>
+              </div>
             </div>
-            <div className="clean-card">
-              <Network className="card-icon" size={32} />
-              <h3>{tMES('card3Title')}</h3>
-              <p>{tMES('card3Text')}</p>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/mes-c4.jpeg" alt="Andon" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Network size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card3Title')}</h3>
+                  <p>{tMES('card3Text')}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
