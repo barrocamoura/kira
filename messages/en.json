@@ -1,0 +1,62 @@
+{
+  "Navigation": {
+    "software": "MES Software",
+    "iot": "IoT Ecosystem",
+    "benefits": "Benefits",
+    "hardware": "Industrial Hardware",
+    "cta": "Schedule Demo"
+  },
+  "Hero": {
+    "title1": "Digital Transformation on the Shop Floor:",
+    "title2": "Smart MES & Limitless IoT",
+    "subtitle": "We deliver true Industry 4.0. We natively integrate advanced management software with intelligent hardware to build a hyper-connected, autonomous, and predictive factory.",
+    "ctaPrimary": "Schedule Demo",
+    "ctaSecondary": "Explore Solutions"
+  },
+  "MES": {
+    "sectionTitle": "Process & Shop Floor Management",
+    "sectionSubtitle": "The brain of your industrial operation. Total visibility from production order to shipping.",
+    "card1Title": "Production & OEE Tracking",
+    "card1Text": "Industrial panels on every line. Real-time OEE tracking, downtime, and highly traceable production order execution.",
+    "card2Title": "Quality Audits & Checklists",
+    "card2Text": "Standardized digital forms, consolidated operational audit history, and paperless capture of critical variables.",
+    "card3Title": "Industrial Andon Boards",
+    "card3Text": "Interactive screens (Wall of Fame) signaling line status, losses, and real-time productivity to the entire factory.",
+    "card4Title": "Performance & 9-Box Matrix",
+    "card4Text": "Modern 'Bottom-Up' operator management, leadership balancing, and automated tracking of factory training."
+  },
+  "IoT": {
+    "sectionTitle": "IoT Ecosystem",
+    "sectionSubtitle": "Cutting-edge industrial equipment to digitize the physical world and integrate it into the MES.",
+    "card1Title": "Predictive Maintenance",
+    "card1Text": "Vibration and temperature sensors continuously monitoring active equipment health.",
+    "card2Title": "Advanced Attendance Terminals",
+    "card2Text": "Facial/RFID attendance control integrated directly with shift costs in the central MES.",
+    "card3Title": "Asset Monitoring",
+    "card3Text": "Level sensors, material flow, and seamless integration with high-precision shop floor scales.",
+    "card4Title": "Machine Automation",
+    "card4Text": "Direct PLC actuation via dedicated IoT Gateway to close the automation loop.",
+    "cta": "View Full Hardware Catalog"
+  },
+  "Benefits": {
+    "title": "Why choose our system?",
+    "b1Title": "Predictive Maintenance",
+    "b1Text": "Anticipate downtimes and increase the uptime of your machine fleet.",
+    "b2Title": "Guaranteed Quality",
+    "b2Text": "Inspect parts with technology that removes human error from the equation.",
+    "b3Title": "Streamlined Efficiency",
+    "b3Text": "The whole factory speaking the same language, reporting bottlenecks in seconds."
+  },
+  "Hardware": {
+    "back": "Back to Home",
+    "title": "Industrial IoT Hardware",
+    "subtitle": "We design and deploy industrial-grade equipment for the most demanding environments. Connectivity and robustness at every network node."
+  },
+  "Footer": {
+    "slogan": "We transform conventional factories into intelligent centers of excellence through proprietary software and hardware.",
+    "contact": "Contact",
+    "hq": "HQ: Braga, Portugal",
+    "btn": "Request Consultation",
+    "rights": "All rights reserved."
+  }
+}

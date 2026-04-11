@@ -1,0 +1,62 @@
+{
+  "Navigation": {
+    "software": "Software MES",
+    "iot": "Ecossistema IoT",
+    "benefits": "Benefícios",
+    "hardware": "Hardware Industrial",
+    "cta": "Agendar Demonstração"
+  },
+  "Hero": {
+    "title1": "Transformação Digital no Chão de Fábrica:",
+    "title2": "MES Inteligente e IoT Sem Limites",
+    "subtitle": "Entregamos a verdadeira Indústria 4.0. Integramos nativamente software de gestão avançado e hardware inteligente para criar uma fábrica hiperconectada, autônoma e preditiva. Controle a sua produção com precisão absoluta.",
+    "ctaPrimary": "Agendar Demonstração",
+    "ctaSecondary": "Explorar Soluções"
+  },
+  "MES": {
+    "sectionTitle": "Gestão de Processos e Chão de Fábrica",
+    "sectionSubtitle": "O cérebro da sua operação industrial. Visibilidade total desde a ordem de produção até à expedição.",
+    "card1Title": "Apontamento de Produção e OEE",
+    "card1Text": "Ecrãs industriais em cada linha. Monitorização de OEE em tempo real, paragens e execução de ordens de produção com máxima rastreabilidade.",
+    "card2Title": "Checklists e Auditorias de Qualidade",
+    "card2Text": "Formulários digitais padronizados, histórico consolidado de auditorias operacionais e captura de variáveis críticas sem papel.",
+    "card3Title": "Painéis Andon Industriais",
+    "card3Text": "Telas interativas (Wall of Fame) que sinalizam o status da linha, perdas e produtividade em tempo real para toda a fábrica.",
+    "card4Title": "Avaliação de Desempenho e Matriz 9-Box",
+    "card4Text": "Gestão moderna de operadores 'Bottom-Up', balanço de liderança e tracking automatizado de formações na sua fábrica."
+  },
+  "IoT": {
+    "sectionTitle": "Ecossistema IoT",
+    "sectionSubtitle": "Equipamentos industriais de ponta para digitalizar o mundo físico e integrá-lo ao sistema MES.",
+    "card1Title": "Manutenção Preditiva",
+    "card1Text": "Sensores de vibração e temperatura para monitorizar a saúde dos equipamentos ativos.",
+    "card2Title": "Terminais de Ponto Avanços",
+    "card2Text": "Controle de presenças facial/RFID integrado aos custos de turnos no sistema MES central.",
+    "card3Title": "Monitoramento de Ativos",
+    "card3Text": "Sensores de nível, fluxo de materiais e integração fluida com balanças de alta precisão.",
+    "card4Title": "Automação de Máquinas",
+    "card4Text": "Atuação direta nos PLC via IoT Gateway dedicado para fechar o ciclo de automação.",
+    "cta": "Ver Catálogo Completo de Hardware"
+  },
+  "Benefits": {
+    "title": "Porquê escolher o nosso sistema?",
+    "b1Title": "Manutenção Preditiva",
+    "b1Text": "Antecipe paragens e aumente o uptime (tempo de atividade) da sua frota.",
+    "b2Title": "Qualidade Assegurada",
+    "b2Text": "Inspecione peças com tecnologia que descarta o erro humano da equação.",
+    "b3Title": "Eficiência Agilizada",
+    "b3Text": "Fábrica inteira a falar a mesma linguagem e relatar gargalos em segundos."
+  },
+  "Hardware": {
+    "back": "Voltar à página principal",
+    "title": "Hardware Industrial IoT",
+    "subtitle": "Desenhamos e implementamos equipamentos de classe industrial para os ambientes mais exigentes. Conectividade e robustez em cada nó da rede."
+  },
+  "Footer": {
+    "slogan": "Transformamos fábricas convencionais em centros de excelência inteligentes através de software e hardware proprietários.",
+    "contact": "Contacto",
+    "hq": "Sede: Braga, Portugal",
+    "btn": "Solicitar Consultoria",
+    "rights": "Todos os direitos reservados."
+  }
+}
