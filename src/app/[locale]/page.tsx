@@ -16,7 +16,7 @@ export default function Home({ params: { locale } }: { params: { locale: string 
       <header className="navbar">
         <div className="container nav-content">
           <div className="logo-container">
-            <span className="logo-text">SPERO <span className="logo-muted">Systems</span></span>
+            <img src="/media/software/logo.png" alt="Spero Systems" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           </div>
           <nav className="nav-links">
             <Link href="#mes">{tNav('software')}</Link>
