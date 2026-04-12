@@ -110,5 +110,21 @@
     "ind3": "Plastic Injection",
     "ind4": "Automotive Industry",
     "ind5": "Textile Sector"
+  },
+  "Demo": {
+    "title": "We Accelerate your Shop Floor",
+    "subtitle": "Schedule a live demo to see how the Spero Systems ecosystem controls native IoT equipment, exposes logical bottlenecks, and drives human efficiency (ILUO Matrices).",
+    "whyTitle": "What to expect from the session?",
+    "why1": "Full 25-minute guided tour of the M.E.S. software.",
+    "why2": "Real-time Dashboard examples (HEATMAP & OEE).",
+    "why3": "Exploratory analysis of your Industry 4.0 needs.",
+    "formTitle": "Request M.E.S. Tour",
+    "fname": "Full Name",
+    "femail": "Work Email",
+    "fphone": "Phone Number",
+    "fcompany": "Organization Name",
+    "frole": "Corporate Role",
+    "fmessage": "What is your main focus or pain point? (Optional)",
+    "btn": "Submit Request"
   }
 }

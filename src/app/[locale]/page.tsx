@@ -51,9 +51,9 @@ export default function Home({ params: { locale } }: { params: { locale: string 
               {tHero('subtitle')}
             </p>
             <div className="hero-actions">
-              <a href="#contacto" className="btn btn-primary">
+              <Link href={`/${locale}/demo`} className="btn btn-primary">
                 {tHero('ctaPrimary')} <MoveRight className="icon-right" size={18} />
-              </a>
+              </Link>
               <Link href="#mes" className="btn btn-outline">
                 {tHero('ctaSecondary')}
               </Link>

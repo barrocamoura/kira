@@ -547,3 +547,172 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* --- DEMO CONTACT B2B PAGE --- */
+.demo-main {
+  background-color: var(--color-bg-secondary);
+  min-height: 100vh;
+}
+
+.demo-hero-section {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 60px;
+  background-color: #0b1121;
+}
+
+.demo-bg-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('/media/software/hero-bg.mp4') center/cover;
+  opacity: 0.1;
+  z-index: 0;
+  filter: blur(10px);
+}
+
+.demo-container {
+  position: relative;
+  z-index: 1;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.demo-copy-side {
+  color: var(--color-white);
+}
+
+.demo-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #f8fafc 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.demo-subtitle {
+  font-size: 1.15rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+.demo-benefits {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 2rem;
+}
+
+.demo-why-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-action-blue);
+}
+
+.demo-check-list {
+  list-style: none;
+  padding: 0;
+}
+
+.demo-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+  color: #e2e8f0;
+}
+
+.demo-icon {
+  color: #10b981; /* Success Green */
+  flex-shrink: 0;
+}
+
+/* Glassmorphism Form Card */
+.glass-form-card {
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.glass-form-card h2 {
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.demo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group label {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-action-blue);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+textarea.form-input {
+  resize: vertical;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-group-row {
+    grid-template-columns: 1fr;
+  }
+  .glass-form-card {
+    padding: 2rem;
+  }
+}

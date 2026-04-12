@@ -110,5 +110,21 @@
     "ind3": "Inyección de Plástico",
     "ind4": "Industria Automotriz",
     "ind5": "Sector Textil"
+  },
+  "Demo": {
+    "title": "Aceleramos su Planta de Producción",
+    "subtitle": "Programe una demostración en vivo para ver cómo el ecosistema de Spero Systems controla hardware IoT nativo, expone cuellos de botella e impulsa la polivalencia humana.",
+    "whyTitle": "¿Qué esperar de la sesión?",
+    "why1": "Visita guiada de 25 minutos al software M.E.S.",
+    "why2": "Ejemplos reales de Dashboards (HEATMAP y OEE).",
+    "why3": "Análisis exploratorio de sus necesidades de Industria 4.0.",
+    "formTitle": "Solicitar Demostración M.E.S.",
+    "fname": "Nombre Completo",
+    "femail": "Correo Corporativo",
+    "fphone": "Teléfono",
+    "fcompany": "Organización",
+    "frole": "Cargo Estratégico",
+    "fmessage": "¿Cuál es su nivel de urgencia o enfoque? (Opcional)",
+    "btn": "Enviar Solicitud"
   }
 }
