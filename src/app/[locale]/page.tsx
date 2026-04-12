@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MoveRight, Cpu, Users, Layers, Zap, Activity, Settings, Network, Target, CheckSquare, ShieldAlert, MonitorSmartphone, Wrench } from "lucide-react";
+import { MoveRight, Cpu, Users, Layers, Zap, Activity, Settings, Network, Target, CheckSquare, ShieldAlert, MonitorSmartphone, Wrench, Ship, Factory, Car, Scissors } from "lucide-react";
 import "../page.css";
 import { useTranslations } from 'next-intl';
 
@@ -10,6 +10,7 @@ export default function Home({ params: { locale } }: { params: { locale: string 
   const tIoT = useTranslations('IoT');
   const tBen = useTranslations('Benefits');
   const tFooter = useTranslations('Footer');
+  const tImp = useTranslations('Impact');
 
   return (
     <main className="main-wrapper">
@@ -161,6 +162,75 @@ export default function Home({ params: { locale } }: { params: { locale: string 
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="impacto" className="impact-section">
+         <div className="impact-bg"></div>
+         <div className="impact-bg-gradient"></div>
+         
+         <div className="container impact-content">
+            <div className="power-stats-grid">
+               <div className="power-stat-item">
+                  <div className="power-stat-value">{tImp('stat1')}</div>
+                  <div className="power-stat-desc">{tImp('stat1Desc')}</div>
+               </div>
+               <div className="power-stat-item">
+                  <div className="power-stat-value">{tImp('stat2')}</div>
+                  <div className="power-stat-desc">{tImp('stat2Desc')}</div>
+               </div>
+               <div className="power-stat-item">
+                  <div className="power-stat-value">{tImp('stat3')}</div>
+                  <div className="power-stat-desc">{tImp('stat3Desc')}</div>
+               </div>
+               <div className="power-stat-item">
+                  <div className="power-stat-value">{tImp('stat4')}</div>
+                  <div className="power-stat-desc">{tImp('stat4Desc')}</div>
+               </div>
+            </div>
+         </div>
+         
+         <div className="trust-marquee-wrapper">
+            <div className="trust-marquee">
+               <span>
+                  {tImp('marquee')}
+               </span>
+               <span>
+                  <Ship className="lucide" size={20} /> {tImp('ind1')}
+               </span>
+               <span>
+                  <Wrench className="lucide" size={20} /> {tImp('ind2')}
+               </span>
+               <span>
+                  <Factory className="lucide" size={20} /> {tImp('ind3')}
+               </span>
+               <span>
+                  <Car className="lucide" size={20} /> {tImp('ind4')}
+               </span>
+               <span>
+                  <Scissors className="lucide" size={20} /> {tImp('ind5')}
+               </span>
+               
+               {/* DUPLICATE TO CREATE THE INFINITE LOOP RUNNING SMOOTHLY */}
+               <span style={{ marginLeft: '4rem' }}>
+                  {tImp('marquee')}
+               </span>
+               <span>
+                  <Ship className="lucide" size={20} /> {tImp('ind1')}
+               </span>
+               <span>
+                  <Wrench className="lucide" size={20} /> {tImp('ind2')}
+               </span>
+               <span>
+                  <Factory className="lucide" size={20} /> {tImp('ind3')}
+               </span>
+               <span>
+                  <Car className="lucide" size={20} /> {tImp('ind4')}
+               </span>
+               <span>
+                  <Scissors className="lucide" size={20} /> {tImp('ind5')}
+               </span>
+            </div>
+         </div>
       </section>
 
       <section id="iot" className="section iot-section">

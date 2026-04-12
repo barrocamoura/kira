@@ -412,3 +412,105 @@
     gap: 2rem;
   }
 }
+
+/* --- IMPACT & TRUST SECTION --- */
+.impact-section {
+  position: relative;
+  background-color: #0b1121;
+  padding: 6rem 0 0;
+  overflow: hidden;
+}
+.impact-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('/media/software/mes-c3.jpeg') center/cover no-repeat;
+  opacity: 0.15;
+  filter: grayscale(100%) contrast(1.2);
+  z-index: 0;
+}
+.impact-bg-gradient {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, var(--color-bg-main) 0%, rgba(11, 17, 33, 0.9) 20%, #0b1121 80%);
+  z-index: 1;
+}
+.impact-content {
+  position: relative;
+  z-index: 2;
+}
+.power-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+.power-stat-item {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.power-stat-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-action-blue);
+}
+.power-stat-value {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--color-action-blue);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
+}
+.power-stat-desc {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+/* MARQUEE TRUST BADGES */
+.trust-marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(15, 23, 42, 0.4);
+}
+.trust-marquee-wrapper::before,
+.trust-marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; width: 10%; z-index: 2;
+}
+.trust-marquee-wrapper::before {
+  left: 0; background: linear-gradient(to right, #0b1121, transparent);
+}
+.trust-marquee-wrapper::after {
+  right: 0; background: linear-gradient(to left, #0b1121, transparent);
+}
+.trust-marquee {
+  display: inline-block;
+  animation: scrollMarquee 40s linear infinite;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.trust-marquee span {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 3rem;
+  color: #f8fafc;
+  gap: 0.75rem;
+}
+.trust-marquee span i.lucide {
+  color: var(--color-action-blue);
+}
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

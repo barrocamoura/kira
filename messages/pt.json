@@ -94,5 +94,21 @@
     "address": "Endereço: Av. da Liberdade 615, 4710-251 Braga",
     "phone": "Telefone: 251 788 442",
     "email": "E-mail: contacto@sperosystem.pt"
+  },
+  "Impact": {
+    "stat1": "+35% OEE",
+    "stat1Desc": "Aumento imediato na Eficiência",
+    "stat2": "0 Latência",
+    "stat2Desc": "Integração 100% nativa via IoT",
+    "stat3": "-90% Papel",
+    "stat3Desc": "Digitalização RNC e Auditorias",
+    "stat4": "< 6 Meses",
+    "stat4Desc": "Retorno de Investimento (R.O.I.)",
+    "marquee": "Arquitetura M.E.S. Testada em Ambientes Extremos:",
+    "ind1": "Indústria Naval",
+    "ind2": "Metalomecânica Pesada",
+    "ind3": "Injeção Plástica",
+    "ind4": "Indústria Automóvel",
+    "ind5": "Setor Têxtil"
   }
 }
