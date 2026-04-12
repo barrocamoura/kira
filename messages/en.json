@@ -59,8 +59,26 @@
   },
   "Hardware": {
     "back": "Back to Home",
-    "title": "Industrial IoT Hardware",
-    "subtitle": "We design and deploy industrial-grade equipment for the most demanding environments. Connectivity and robustness at every network node."
+    "title": "IoT Industrial Hardware: The Engineering of the Future",
+    "subtitle": "We design and manufacture our own aerospace-grade edge devices, natively prepared for extreme factory environments. Each unit is a marvel of microelectronics, operating via standalone logic boards housed in fully water and dust sealed casings. Equipped with long-lasting embedded batteries and robust Wi-Fi/Bluetooth modules, we guarantee an instant, secure, and limitless integration cycle directly into our M.E.S. ecosystem.",
+    "hcard1Title": "Spero Material Flow Gateway",
+    "hcard1Text": "Dedicated terminals with external flow meters to dynamically read the flow of raw materials (liquids, gases, paints, resins, composites). Consumptions are reported in real time to the M.E.S., allocating costs with surgical precision to the Production Order.",
+    "hcard2Title": "Spero RFID/NFC Logic Node",
+    "hcard2Text": "Advanced control peripheral via high-frequency NFC and RFID. Provides secure authenticity to log dynamic operations, track forklift movements or trace numerical cycles across the digital shop floor.",
+    "hcard3Title": "Spero SmartScale & Load Tracker",
+    "hcard3Text": "Weight and calibration processing terminal. Compatible with industrial scales, this gateway captures solid weight variations with maximum traceability, feeding the M.E.S. with data immune to human measurement errors.",
+    "hcard4Title": "Spero CNC & OEE Hub",
+    "hcard4Text": "The beating heart of a connected factory. Featuring a color TFT screen, it’s designed to couple with legacy machines, mills, or robots, reading direct PLC pulses. It allows the M.E.S. to calculate OEE with astronomical reliability.",
+    "hcard5Title": "Spero Climate & Enviro Node",
+    "hcard5Text": "The invisible guardian of your factory. Class I sensor node that broadcasts critical environmental data (Humidity and Core Temperature) non-stop, protecting the curing phase of sensitive products and maintaining clean-room compliance.",
+    "hcard6Title": "Spero Ultrasonic Level Reader",
+    "hcard6Text": "Infallible level and distance measurement system in vats and silos via ultrasonic frequencies. It triggers automated refill protocols in the central MES platform, warning of immediate input shortages for production.",
+    "hcard7Title": "Spero GSM Control Hub",
+    "hcard7Text": "Central alert and reporting board for MES notifications equipped with an independent GSM card slot (2G/4G/SMS). Guarantees that, in the event of a total Wi-Fi outage, factory management still receives urgent maintenance requests.",
+    "hcard8Title": "Spero Industrial Vision System",
+    "hcard8Text": "Unit equipped with optical integration (camera) and pulse reading to count raw materials on continuous belts. Streamlines synergies with the MES to capture pass-through inputs without manual intervention.",
+    "hcard9Title": "Spero Face & Access Key",
+    "hcard9Text": "State-of-the-art hybrid terminal designed for biometric logging via Front Vision (Facial Recognition) alongside a magnetic RFID badge reader. Direct cloud-syncing for accurate HR cost calculation."
   },
   "Footer": {
     "slogan": "We transform conventional factories into intelligent centers of excellence through proprietary software and hardware.",

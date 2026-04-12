@@ -59,8 +59,26 @@
   },
   "Hardware": {
     "back": "Volver a Inicio",
-    "title": "Hardware Industrial IoT",
-    "subtitle": "Diseñamos e implementamos equipos de clase industrial para los entornos más exigentes. Conectividad y robustez en cada nodo."
+    "title": "Hardware Industrial IoT: La Ingeniería del Futuro",
+    "subtitle": "Diseñamos y fabricamos nuestros propios dispositivos Edge de grado aeroespacial, preparados nativamente para entornos industriales extremos. Cada unidad es un prodigio microelectrónico con placas lógicas independientes, alojadas en recintos blindados contra agua y polvo. Con baterías embebidas de larga duración y módulos Wi-Fi/Bluetooth, garantizamos un ciclo de integración instantáneo y sin límites con el M.E.S.",
+    "hcard1Title": "Spero Gateway de Flujo",
+    "hcard1Text": "Terminales dedicados con medidores externos de flujo para registrar materias primas dinámicas (líquidos, resinas, gases). Los consumos son reportados en tiempo real al M.E.S., asignando el costo con precisión milimétrica a cada Orden.",
+    "hcard2Title": "Spero Nodo RFID/NFC",
+    "hcard2Text": "Periférico de control avanzado vía NFC y RFID de alta frecuencia. Brinda autenticidad segura para registrar operarios, mapear movimientos de montacargas y rastrear ciclos de planta en el gemelo digital M.E.S.",
+    "hcard3Title": "Spero SmartScale Hub",
+    "hcard3Text": "Terminal de procesamiento de pesajes y calibraciones. Compatible con básculas industriales, esta pasarela captura desviaciones de gramos con trazabilidad clínica, alimentando el M.E.S. con datos inmunes a interpretaciones erróneas.",
+    "hcard4Title": "Spero Controlador CNC y OEE",
+    "hcard4Text": "El corazón de una fábrica inteligente. Con pantalla TFT a color, fue diseñado para conectarse a máquinas antiguas, fresadoras o tornos CNC, capturando pulsos directos de los autómatas. Calcula el OEE con una fiabilidad extrema.",
+    "hcard5Title": "Spero Analizador Ambiental",
+    "hcard5Text": "El guardián invisible del entorno operativo. Sensor Clase I que proyecta telemetría climática (Humedad y Temperatura Central) al M.E.S., previniendo daños a materias primas termosensibles y regulando áreas higiénicas.",
+    "hcard6Title": "Spero Lector de Nivel Ultrasonido",
+    "hcard6Text": "Sistema de sondeo de nivel y distancias en depósitos o silos industriales usando pulso ultrasónico. Dispara rutinas autónomas de pedido a proveedores en la red central M.E.S., combatiendo la falta silenciosa de insumos.",
+    "hcard7Title": "Spero Tarjeta Reporte GSM",
+    "hcard7Text": "Módulo crítico de despacho de alarmas M.E.S. al celular del director con chip GSM 4G embebido (SMS). Garantiza de forma offline que, si se cae el Wi-Fi general, las alarmas sigan mandando instrucciones a los mantenedores.",
+    "hcard8Title": "Spero Sistema de Visión Artificial",
+    "hcard8Text": "Unidad de flujo continuo equipada con cámara fotográfica y sensores de paso. Su sinergia optimizada con el M.E.S. captura de forma automatizada las unidades procesadas en un transportador sin necesidad de botonera física.",
+    "hcard9Title": "Spero Clave de Acceso Facial",
+    "hcard9Text": "Terminal híbrido vanguardista compuesto por Cámara de Reconocimiento Facial cruzado con chip NFC. Sincronización instantánea en la nube para automatizar el fichaje en RR.HH. sin fraude y asignar mano de obra a los centros OEE."
   },
   "Footer": {
     "slogan": "Transformamos fábricas convencionales en centros de excelencia inteligentes a través de software y hardware propio.",

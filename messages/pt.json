@@ -59,8 +59,26 @@
   },
   "Hardware": {
     "back": "Voltar à página principal",
-    "title": "Hardware Industrial IoT",
-    "subtitle": "Desenhamos e implementamos equipamentos de classe industrial para os ambientes mais exigentes. Conectividade e robustez em cada nó da rede."
+    "title": "Hardware Industrial IoT: A Engenharia do Futuro",
+    "subtitle": "Concebemos e produzimos os nossos próprios equipamentos de classe aeroespacial (Edge Devices), preparados nativamente para ambientes fabris extremos. Cada unidade é um prodígio de microeletrónica, operando através de placas lógicas independentes alojadas em caixas blindadas à prova de água e de pó. Com baterias de alta duração e módulos Wi-Fi/Bluetooth embutidos, garantimos um ciclo de integração instantâneo, seguro e sem limites com o nosso ecossistema M.E.S.",
+    "hcard1Title": "Spero Material Flow Gateway",
+    "hcard1Text": "Terminais dedicados com medidores externos para ler dinamicamente fluxos de matérias-primas (líquidos, gases, tintas, resinas, compostos). Todos os caudais consumidos são reportados em tempo real ao M.E.S., alocando o custo e as quebras materiais com precisão cirúrgica na Ordem de Produção.",
+    "hcard2Title": "Spero RFID/NFC Logic Node",
+    "hcard2Text": "Periférico de controlo avançado via NFC e RFID de alta frequência. Confere autenticidade segura para registar operações dinâmicas, rastrear movimentos de empilhadores ou rastrear ciclos numéricos no chão de fábrica digital.",
+    "hcard3Title": "Spero SmartScale & Load Tracker",
+    "hcard3Text": "Terminal de processamento de pesagens e calibrações. Compatível com balanças industriais, este gateway capta as variações de gramagem (Sólidos ou Suspensões) com a máxima rastreabilidade, alimentando o M.E.S. com dados imunes ao erro humano.",
+    "hcard4Title": "Spero CNC & OEE Hub",
+    "hcard4Text": "O coração pulsante da fábrica conectada. Com ecrã TFT colorido, foi desenhado para acopolar em máquinas antigas, fresadoras ou robôs, lendo impulsos diretos dos PLC. Permite ao M.E.S. calcular o OEE com uma fiabilidade astronómica.",
+    "hcard5Title": "Spero Climate & Enviro Node",
+    "hcard5Text": "Guardião invisível do ambiente fabril. Sensor de Classe I que transmite em tempo contínuo leituras ambientais críticas (Humidade e Temperatura Termal) para proteger a secagem de produtos sensíveis, ou manter a sala branca em conformidade para o M.E.S.",
+    "hcard6Title": "Spero Ultrasonic Level Reader",
+    "hcard6Text": "Sistema infalível de medição de nível e distâncias em contentores e silos através de frequências ultrassónicas e capacitivas. Dispara ordens lógicas de reabastecimento na plataforma central (M.E.S.), alertando da falta de inputs para a produção.",
+    "hcard7Title": "Spero GSM Control Hub",
+    "hcard7Text": "Placa central de alerta remoto e report de notificações do M.E.S. com slot independente de cartão GSM (2G/4G/SMS). Garante que perante quebras de Wi-Fi, a hierarquia da fábrica continua a receber os pedidos urgentes de manutenção.",
+    "hcard8Title": "Spero Industrial Vision System",
+    "hcard8Text": "Unidade equipada com integração óptica (câmara) e leitura de pulso para contar material em tapetes contínuos. A sinergia otimizada com o M.E.S. capta contagens sem intervenção física, aumentando a fluidez logística drásticamente.",
+    "hcard9Title": "Spero Face & Access Key",
+    "hcard9Text": "Terminal híbrido de última geração destinado ao registo biométrico via Visão Frontal (reconhecimento facial) e crachá magnético RFID. Sincronização direta na nuvem de horários e apuramento de custos logísticos de R.H. ao milésimo de segundo."
   },
   "Footer": {
     "slogan": "Transformamos fábricas convencionais em centros de excelência inteligentes através de software e hardware proprietários.",

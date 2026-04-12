@@ -286,3 +286,131 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: #94a3b8;
 }
+
+/* --- HARDWARE NASA CATALOG --- */
+.hw-nasa-section {
+  background-color: #0b1121; /* deep space blue */
+  color: #e2e8f0;
+}
+
+.hw-nasa-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 5rem;
+}
+
+.hw-nasa-header h1 {
+  color: #60a5fa;
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hw-nasa-header p {
+  font-size: 1.25rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.hw-nasa-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  padding-bottom: 5rem;
+}
+
+.hw-nasa-card {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hw-nasa-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7);
+  border-color: rgba(96, 165, 250, 0.4);
+}
+
+.hw-nasa-card:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.hw-nasa-image-wrapper {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.hw-nasa-image-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.hw-nasa-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.hw-nasa-card:hover .hw-nasa-image {
+  transform: scale(1.03);
+}
+
+.hw-nasa-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hw-nasa-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+}
+
+.hw-nasa-title {
+  font-size: 2.2rem;
+  color: #f8fafc;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.hw-nasa-desc {
+  font-size: 1.15rem;
+  color: #cbd5e1;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .hw-nasa-card, .hw-nasa-card:nth-child(even) {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+  }
+}
