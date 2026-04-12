@@ -89,8 +89,10 @@
   "Footer": {
     "slogan": "Transformamos fábricas convencionales en centros de excelencia inteligentes a través de software y hardware propio.",
     "contact": "Contacto",
-    "hq": "Sede: Braga, Portugal",
     "btn": "Solicitar Consultoría",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "address": "Dirección: Av. da Liberdade 615, 4710-251 Braga",
+    "phone": "Teléfono: 251 788 442",
+    "email": "E-mail: contacto@sperosystem.pt"
   }
 }

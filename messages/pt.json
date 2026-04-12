@@ -9,7 +9,7 @@
   "Hero": {
     "title1": "Transformação Digital no Chão de Fábrica:",
     "title2": "MES Inteligente e IoT Sem Limites",
-    "subtitle": "Entregamos a verdadeira Indústria 4.0. Integramos nativamente software de gestão avançado e hardware inteligente para criar uma fábrica hiperconectada, autônoma e preditiva. Controle a sua produção com precisão absoluta.",
+    "subtitle": "Entregamos a verdadeira Indústria 4.0. Integramos nativamente software de gestão avançado e hardware inteligente para criar uma fábrica hiperconectada, autónoma e preditiva. Controlo a sua produção com precisão absoluta.",
     "ctaPrimary": "Agendar Demonstração",
     "ctaSecondary": "Explorar Soluções"
   },
@@ -21,7 +21,7 @@
     "card2Title": "Checklists e Auditorias de Qualidade",
     "card2Text": "Formulários digitais padronizados, histórico consolidado de auditorias operacionais e captura de variáveis críticas sem papel.",
     "card3Title": "Painéis Andon Industriais",
-    "card3Text": "Telas interativas (Wall of Fame) que sinalizam o status da linha, perdas e produtividade em tempo real para toda a fábrica.",
+    "card3Text": "Ecrãs interativas (Wall of Fame) que sinalizam o status da linha, perdas e produtividade em tempo real para toda a fábrica.",
     "card4Title": "Avaliação de Desempenho e Matriz 9-Box",
     "card4Text": "Gestão moderna de operadores 'Bottom-Up', balanço de liderança e tracking automatizado de formações na sua fábrica.",
     "card5Title": "Cultura Kaizen Industrial",
@@ -32,7 +32,7 @@
     "card7Text": "Cruz de segurança automatizada, reportes de incidentes e análise investigativa da segurança operacional garantindo o zero acidentes.",
     "card8Title": "Quiosque de Colaboradores (Bottom-Up)",
     "card8Text": "Terminais dinâmicos para inquéritos de avaliação de líderes (Bottom-up), índice de clima/mood e acompanhamento da polivalência de formações.",
-    "card9Title": "Controle BOM e Ferramentaria",
+    "card9Title": "Controlo BOM e Ferramentaria",
     "card9Text": "Controlo estruturado da entrada/saída de ferramentas, ligação a BOMs produtivos e registo de devoluções no ecossistema de consumíveis."
   },
   "IoT": {
@@ -41,8 +41,8 @@
     "card1Title": "Manutenção Preditiva",
     "card1Text": "Sensores de vibração e temperatura para monitorizar a saúde dos equipamentos ativos.",
     "card2Title": "Terminais de Ponto Avanços",
-    "card2Text": "Controle de presenças facial/RFID integrado aos custos de turnos no sistema MES central.",
-    "card3Title": "Monitoramento de Ativos",
+    "card2Text": "Controlo de presenças facial/RFID integrado aos custos de turnos no sistema MES central.",
+    "card3Title": "Monitorização de Ativos",
     "card3Text": "Sensores de nível, fluxo de materiais e integração fluida com balanças de alta precisão.",
     "card4Title": "Automação de Máquinas",
     "card4Text": "Atuação direta nos PLC via IoT Gateway dedicado para fechar o ciclo de automação.",
@@ -89,8 +89,10 @@
   "Footer": {
     "slogan": "Transformamos fábricas convencionais em centros de excelência inteligentes através de software e hardware proprietários.",
     "contact": "Contacto",
-    "hq": "Sede: Braga, Portugal",
     "btn": "Solicitar Consultoria",
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "address": "Endereço: Av. da Liberdade 615, 4710-251 Braga",
+    "phone": "Telefone: 251 788 442",
+    "email": "E-mail: contacto@sperosystem.pt"
   }
 }

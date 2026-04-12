@@ -249,8 +249,10 @@ export default function Home({ params: { locale } }: { params: { locale: string 
             </div>
             <div className="footer-contact">
                <h4>{tFooter('contact')}</h4>
-               <p>{tFooter('hq')}</p>
-               <a href="mailto:contato@sperosystems.pt" className="btn btn-primary btn-small" style={{marginTop: '1rem'}}>
+               <p style={{ margin: '0.2rem 0' }}>{tFooter('address')}</p>
+               <p style={{ margin: '0.2rem 0' }}>{tFooter('phone')}</p>
+               <p style={{ margin: '0.2rem 0' }}>{tFooter('email')}</p>
+               <a href="mailto:contacto@sperosystem.pt" className="btn btn-primary btn-small" style={{marginTop: '1.5rem'}}>
                   {tFooter('btn')}
                </a>
             </div>
