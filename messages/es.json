@@ -50,12 +50,18 @@
   },
   "Benefits": {
     "title": "¿Por qué elegir nuestro sistema?",
-    "b1Title": "Mantenimiento Predictivo",
-    "b1Text": "Anticipe las interrupciones y aumente el tiempo de actividad.",
-    "b2Title": "Calidad Garantizada",
-    "b2Text": "Inspeccione piezas con tecnología que elimina el error humano.",
-    "b3Title": "Eficiencia Agilizada",
-    "b3Text": "Toda la fábrica hablando el mismo idioma y reportando problemas al instante."
+    "b1Title": "1. Personas en el Centro (Matriz ILUO y 9-Box)",
+    "b1Text": "No administramos solo la maquinaria. Trazamos las métricas de polivalencia, talento corporativo y planes de evolución de los operadores, mitigando la rotación humana masivamente.",
+    "b2Title": "2. Mentoría M.E.S. con Inteligencia Artificial",
+    "b2Text": "Mediante el feedback Bottom-Up y algoritmos internos, nuestra IA actaú como mentor discreto, guiando a los líderes de primera línea hacia la excelencia.",
+    "b3Title": "3. Planta Gamificada (Displays SCADA)",
+    "b3Text": "Muro de Productividad y Gloria en vivo. Transforma el Andon tradicional en tablones sociales que celebran las metas alcanzadas y motivan a los Top Performers.",
+    "b4Title": "4. Integración Hardware IoT: Cero Terceros",
+    "b4Text": "Dispositivos de Grado Militar instalados que extraen las pulsaciones eléctricas y emiten sin latencia las métricas precisas de Disponibilidad, Calidad y Rendimiento.",
+    "b5Title": "5. Cero Papel (Auditorías Calidad y Conformidad)",
+    "b5Text": "Rutinas en Tablets para controles de Calidad y Registro de No Conformidades M.E.S. Bloquea de inmediato las mermas antes de afectar las cadenas de valor subsiguientes.",
+    "b6Title": "6. Heatmaps Dinámicos de Operación",
+    "b6Text": "Visión de águila para la Directiva. Entienda cuellos de botella instantáneos, eventos térmicos de fábrica y flujos logísticos cruzados, en un único mapa de calor."
   },
   "Hardware": {
     "back": "Volver a Inicio",

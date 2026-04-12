@@ -50,12 +50,18 @@
   },
   "Benefits": {
     "title": "Porquê escolher o nosso sistema?",
-    "b1Title": "Manutenção Preditiva",
-    "b1Text": "Antecipe paragens e aumente o uptime (tempo de atividade) da sua frota.",
-    "b2Title": "Qualidade Assegurada",
-    "b2Text": "Inspecione peças com tecnologia que descarta o erro humano da equação.",
-    "b3Title": "Eficiência Agilizada",
-    "b3Text": "Fábrica inteira a falar a mesma linguagem e relatar gargalos em segundos."
+    "b1Title": "1. Pessoas no Centro (Matriz ILUO & 9-Box)",
+    "b1Text": "Não gerimos apenas o \"ferro\". Mapeamos as valências, o talento e a evolução dos seus operadores através de grelhas interativas (ILUO), mitigando o turnover.",
+    "b2Title": "2. Mentoria M.E.S. em Inteligência Artificial",
+    "b2Text": "Baseado em inquéritos Bottom-Up e algoritmos proprietários, a nossa IA atua como um mentor discreto para as suas lideranças intermédias de fábrica.",
+    "b3Title": "3. Shopfloor Gamificado (Visão SCADA)",
+    "b3Text": "Muralha de Produtividade em tempo real. Transforme as televisões da sua fábrica num Andon social que expõe quebras, mas acima de tudo celebra os Top Performers.",
+    "b4Title": "4. Integração IoT Direta \"Hardware-to-OEE\"",
+    "b4Text": "Equipamento classe aeroespacial (Edge/IoT) que lê impulsos dinâmicos dos robôs e envia direto à base de comandos as matrizes de OEE (Disponibilidade, Qualidade e Rendimento).",
+    "b5Title": "5. O Fim Absoluto do Papel (RNC & Auditoria)",
+    "b5Text": "Módulos nativos para executar controlos de Qualidade ao vivo. O que levaria dias num relatório, bloqueia preventivamente o lote em milissegundos sem gastar tinta.",
+    "b6Title": "6. Factory Heatmaps (Latência Zero)",
+    "b6Text": "Visibilidade instantânea para Administração. Num único ecrã assista aos estrangulamentos logísticos, qualidade do ar e incidentes num mapa de calor."
   },
   "Hardware": {
     "back": "Voltar à página principal",

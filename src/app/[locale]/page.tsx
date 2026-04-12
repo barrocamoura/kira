@@ -230,21 +230,13 @@ export default function Home({ params: { locale } }: { params: { locale: string 
                <h2>{tBen('title')}</h2>
             </div>
             <div className="benefits-grid">
-               <div className="benefit-item">
-                  <div className="b-number">01</div>
-                  <h4>{tBen('b1Title')}</h4>
-                  <p>{tBen('b1Text')}</p>
-               </div>
-               <div className="benefit-item">
-                  <div className="b-number">02</div>
-                  <h4>{tBen('b2Title')}</h4>
-                  <p>{tBen('b2Text')}</p>
-               </div>
-               <div className="benefit-item">
-                  <div className="b-number">03</div>
-                  <h4>{tBen('b3Title')}</h4>
-                  <p>{tBen('b3Text')}</p>
-               </div>
+               {[1, 2, 3, 4, 5, 6].map(num => (
+                 <div key={num} className="benefit-item">
+                    <div className="b-number">0{num}</div>
+                    <h4>{tBen(`b${num}Title`)}</h4>
+                    <p>{tBen(`b${num}Text`)}</p>
+                 </div>
+               ))}
             </div>
          </div>
       </section>

@@ -50,12 +50,18 @@
   },
   "Benefits": {
     "title": "Why choose our system?",
-    "b1Title": "Predictive Maintenance",
-    "b1Text": "Anticipate downtimes and increase the uptime of your machine fleet.",
-    "b2Title": "Guaranteed Quality",
-    "b2Text": "Inspect parts with technology that removes human error from the equation.",
-    "b3Title": "Streamlined Efficiency",
-    "b3Text": "The whole factory speaking the same language, reporting bottlenecks in seconds."
+    "b1Title": "1. People-First Mindset (ILUO & 9-Box Matrices)",
+    "b1Text": "We don't just manage the machinery. We continuously map the skillsets, talent, and progression paths of your operators, significantly mitigating turnover.",
+    "b2Title": "2. AI Mentorship Inside the M.E.S.",
+    "b2Text": "Based on anonymous Bottom-Up surveys and proprietary models, our AI acts as a discreet mentor, coaching middle-management leaders on the shop floor.",
+    "b3Title": "3. Gamified Shopfloor (SCADA Walls)",
+    "b3Text": "Real-time Wall of Fame. Transform standard factory TVs into an interactive, social Andon board that highlights bottlenecks but mainly champions the daily Top Performers.",
+    "b4Title": "4. Direct Hardware-to-OEE IoT Integrations",
+    "b4Text": "Our aerospace-grade Edge/IoT equipment captures raw pulses from robotic assemblies and bypasses legacy PLCs directly into full OEE diagnostics instantly.",
+    "b5Title": "5. The Absolute End of Paper Trails",
+    "b5Text": "Native digital modules execute live QA audits and dynamic Non-Conformity reports. What used to take days of routing now flags batches in a millisecond.",
+    "b6Title": "6. Live Factory Heatmaps (Zero Latency)",
+    "b6Text": "Bird's eye view telemetry for C-level tracking. Monitor machine breakdowns, airborne limits, and resource allocations dynamically across the 2D layout."
   },
   "Hardware": {
     "back": "Back to Home",
