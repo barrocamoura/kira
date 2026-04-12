@@ -71,8 +71,41 @@
 
 /* Responsive adjustment for nav */
 @media (max-width: 900px) {
+  .nav-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .navbar {
+    height: auto;
+    padding: 15px 0;
+  }
   .nav-links {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    order: 3;
+    gap: 1rem;
+    padding-top: 0.8rem;
+  }
+  .nav-links a {
+    font-size: 0.85rem;
+  }
+  .logo-container {
+    order: 1;
+  }
+  .language-switcher {
+    order: 2;
+    border-left: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    padding-top: 140px; /* Adjust for larger wrapped mobile navbar */
   }
 }
 
