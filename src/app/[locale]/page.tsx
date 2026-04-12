@@ -51,7 +51,7 @@ export default function Home({ params: { locale } }: { params: { locale: string 
               {tHero('subtitle')}
             </p>
             <div className="hero-actions">
-              <a href="#contato" className="btn btn-primary">
+              <a href="#contacto" className="btn btn-primary">
                 {tHero('ctaPrimary')} <MoveRight className="icon-right" size={18} />
               </a>
               <Link href="#mes" className="btn btn-outline">
@@ -311,7 +311,7 @@ export default function Home({ params: { locale } }: { params: { locale: string 
          </div>
       </section>
 
-      <footer id="contato" className="footer">
+      <footer id="contacto" className="footer">
          <div className="container footer-grid">
             <div className="footer-brand">
                <h3>SPERO Systems</h3>
