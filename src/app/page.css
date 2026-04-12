@@ -347,21 +347,25 @@
   flex: 1;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
   position: relative;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
 }
 
 .hw-nasa-image-wrapper::after {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
   pointer-events: none;
 }
 
 .hw-nasa-image {
   width: 100%;
   height: auto;
+  max-height: 450px;
   display: block;
   object-fit: contain;
   transition: transform 0.5s ease;

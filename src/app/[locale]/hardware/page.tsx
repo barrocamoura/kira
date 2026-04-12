@@ -41,10 +41,6 @@ export default function Hardware({ params: { locale } }: { params: { locale: str
       </header>
 
       <div className="container" style={{ paddingTop: '50px' }}>
-         <Link href={`/${locale}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-corporate-blue)', textDecoration: 'none', marginBottom: '3rem', fontWeight: 600 }}>
-            <MoveLeft size={18} /> {tHW('back')}
-         </Link>
-         
          <div className="hw-nasa-header">
             <h1>{tHW('title')}</h1>
             <p>{tHW('subtitle')}</p>
