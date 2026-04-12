@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 
 export default function Hardware({ params: { locale } }: { params: { locale: string } }) {
   const tHW = useTranslations('Hardware');
+  const tNav = useTranslations('Navigation');
 
   const hwCatalog = [
     { id: 1, img: 'iot-1.jpeg', title: tHW('hcard1Title'), text: tHW('hcard1Text'), tag: 'FLOW CONTROL', icon: <Activity size={18} /> },
@@ -20,8 +21,27 @@ export default function Hardware({ params: { locale } }: { params: { locale: str
 
   return (
     <main className="main-wrapper hw-nasa-section" style={{ minHeight: '100vh', padding: '100px 0 0' }}>
-      <div className="container">
-         <Link href={`/${locale}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#60a5fa', textDecoration: 'none', marginBottom: '3rem', fontWeight: 600 }}>
+      <header className="navbar">
+        <div className="container nav-content">
+          <div className="logo-container">
+            <img src="/media/software/logo.png" alt="Spero Systems" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
+          </div>
+          <nav className="nav-links">
+            <Link href={`/${locale}#mes`}>{tNav('software')}</Link>
+            <Link href={`/${locale}#iot`}>{tNav('iot')}</Link>
+            <Link href={`/${locale}#beneficios`}>{tNav('benefits')}</Link>
+            <Link href={`/${locale}/hardware`} style={{ color: 'var(--color-corporate-blue)' }}>{tNav('hardware')}</Link>
+          </nav>
+          <div className="language-switcher">
+            <Link href="/pt/hardware" className={locale === 'pt' ? 'active' : ''}>PT</Link> | 
+            <Link href="/en/hardware" className={locale === 'en' ? 'active' : ''}>EN</Link> | 
+            <Link href="/es/hardware" className={locale === 'es' ? 'active' : ''}>ES</Link>
+          </div>
+        </div>
+      </header>
+
+      <div className="container" style={{ paddingTop: '50px' }}>
+         <Link href={`/${locale}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-corporate-blue)', textDecoration: 'none', marginBottom: '3rem', fontWeight: 600 }}>
             <MoveLeft size={18} /> {tHW('back')}
          </Link>
          
