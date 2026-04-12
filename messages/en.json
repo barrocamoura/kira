@@ -23,7 +23,17 @@
     "card3Title": "Industrial Andon Boards",
     "card3Text": "Interactive screens (Wall of Fame) signaling line status, losses, and real-time productivity to the entire factory.",
     "card4Title": "Performance & 9-Box Matrix",
-    "card4Text": "Modern 'Bottom-Up' operator management, leadership balancing, and automated tracking of factory training."
+    "card4Text": "Modern 'Bottom-Up' operator management, leadership balancing, and automated tracking of factory training.",
+    "card5Title": "Industrial Kaizen Culture",
+    "card5Text": "Visual management for continuous improvement, Kaizen idea submission, and digital A3 panels for structured problem solving on the factory floor.",
+    "card6Title": "Gemba Walking Routines",
+    "card6Text": "Digital inspection routines for leadership on the shop floor, with photo attachments and tracking of improvement opportunities.",
+    "card7Title": "HSE & Incident Management",
+    "card7Text": "Automated safety cross, incident reporting, and investigative analysis of operational safety to guarantee a zero-accident environment.",
+    "card8Title": "Employee Kiosk (Bottom-Up)",
+    "card8Text": "Dynamic terminals for bottom-up leadership evaluation surveys, workforce mood index, and tracking of multifaceted training (ILUO).",
+    "card9Title": "BOM & Tooling Management",
+    "card9Text": "Structured control over tool check-in/check-out, links to production BOMs, and asset returns within the consumables ecosystem."
   },
   "IoT": {
     "sectionTitle": "IoT Ecosystem",

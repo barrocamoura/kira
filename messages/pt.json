@@ -23,7 +23,17 @@
     "card3Title": "Painéis Andon Industriais",
     "card3Text": "Telas interativas (Wall of Fame) que sinalizam o status da linha, perdas e produtividade em tempo real para toda a fábrica.",
     "card4Title": "Avaliação de Desempenho e Matriz 9-Box",
-    "card4Text": "Gestão moderna de operadores 'Bottom-Up', balanço de liderança e tracking automatizado de formações na sua fábrica."
+    "card4Text": "Gestão moderna de operadores 'Bottom-Up', balanço de liderança e tracking automatizado de formações na sua fábrica.",
+    "card5Title": "Cultura Kaizen Industrial",
+    "card5Text": "Gestão visual para melhoria contínua, submissão de ideias Kaizen e painéis A3 digitais para resolução de problemas estruturados na sua fábrica.",
+    "card6Title": "Roteiros Gemba Walking",
+    "card6Text": "Roteiros digitais de inspeção da liderança no chão de fábrica, com registo fotográfico e de oportunidades de melhoria ao percorrer a linha.",
+    "card7Title": "Gestão de HST e Ocorrências",
+    "card7Text": "Cruz de segurança automatizada, reportes de incidentes e análise investigativa da segurança operacional garantindo o zero acidentes.",
+    "card8Title": "Quiosque de Colaboradores (Bottom-Up)",
+    "card8Text": "Terminais dinâmicos para inquéritos de avaliação de líderes (Bottom-up), índice de clima/mood e acompanhamento da polivalência de formações.",
+    "card9Title": "Controle BOM e Ferramentaria",
+    "card9Text": "Controlo estruturado da entrada/saída de ferramentas, ligação a BOMs produtivos e registo de devoluções no ecossistema de consumíveis."
   },
   "IoT": {
     "sectionTitle": "Ecossistema IoT",

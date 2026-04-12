@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MoveRight, Cpu, Users, Layers, Zap, Activity, Settings, Network } from "lucide-react";
+import { MoveRight, Cpu, Users, Layers, Zap, Activity, Settings, Network, Target, CheckSquare, ShieldAlert, MonitorSmartphone, Wrench } from "lucide-react";
 import "../page.css";
 import { useTranslations } from 'next-intl';
 
@@ -80,12 +80,22 @@ export default function Home({ params: { locale } }: { params: { locale: string 
               </div>
             </div>
             <div className="clean-card iot-card" style={{ padding: 0 }}>
-              <img src="/media/software/mes-c2.jpeg" alt="Audits" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <img src="/media/software/qualidade.jpeg" alt="Audits" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <div style={{ padding: '1.5rem' }}>
                 <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Activity size={28} /></div>
                 <div className="iot-content">
                   <h3>{tMES('card2Title')}</h3>
                   <p>{tMES('card2Text')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/andon.jpeg" alt="Andon" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Network size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card3Title')}</h3>
+                  <p>{tMES('card3Text')}</p>
                 </div>
               </div>
             </div>
@@ -100,12 +110,52 @@ export default function Home({ params: { locale } }: { params: { locale: string 
               </div>
             </div>
             <div className="clean-card iot-card" style={{ padding: 0 }}>
-              <img src="/media/software/mes-c4.jpeg" alt="Andon" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <img src="/media/software/kaizen.jpeg" alt="Kaizen" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
               <div style={{ padding: '1.5rem' }}>
-                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Network size={28} /></div>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Target size={28} /></div>
                 <div className="iot-content">
-                  <h3>{tMES('card3Title')}</h3>
-                  <p>{tMES('card3Text')}</p>
+                  <h3>{tMES('card5Title')}</h3>
+                  <p>{tMES('card5Text')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/gemba.jpeg" alt="Gemba" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><CheckSquare size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card6Title')}</h3>
+                  <p>{tMES('card6Text')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/hst.jpeg" alt="HST" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><ShieldAlert size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card7Title')}</h3>
+                  <p>{tMES('card7Text')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/Quiosque.jpeg" alt="Quiosque" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><MonitorSmartphone size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card8Title')}</h3>
+                  <p>{tMES('card8Text')}</p>
+                </div>
+              </div>
+            </div>
+            <div className="clean-card iot-card" style={{ padding: 0 }}>
+              <img src="/media/software/ferramentaria.jpeg" alt="Ferramentaria" style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <div className="iot-icon-wrapper" style={{ marginTop: '-40px', position: 'relative', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}><Wrench size={28} /></div>
+                <div className="iot-content">
+                  <h3>{tMES('card9Title')}</h3>
+                  <p>{tMES('card9Text')}</p>
                 </div>
               </div>
             </div>

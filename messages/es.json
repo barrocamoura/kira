@@ -23,7 +23,17 @@
     "card3Title": "Paneles Andon Industriales",
     "card3Text": "Pantallas interactivas (Wall of Fame) que señalan el estado de la línea, las pérdidas y la productividad en tiempo real.",
     "card4Title": "Evaluación e Matriz 9-Box",
-    "card4Text": "Gestión moderna de operadores 'Bottom-Up', balance de liderazgo y seguimiento automatizado de formación."
+    "card4Text": "Gestión moderna de operadores 'Bottom-Up', balance de liderazgo y seguimiento automatizado de formación.",
+    "card5Title": "Cultura Kaizen Industrial",
+    "card5Text": "Gestión visual para mejora continua, envío de ideas Kaizen y paneles A3 digitales para la resolución estructurada de problemas en la fábrica.",
+    "card6Title": "Rutas de Gemba Walking",
+    "card6Text": "Rutas de inspección digitales para líderes en la planta de producción, con registros fotográficos y seguimiento de oportunidades de mejora.",
+    "card7Title": "Gestión de HSE e Incidentes",
+    "card7Text": "Cruz de seguridad automatizada, reporte de incidentes y análisis investigativo para garantizar un entorno de cero accidentes.",
+    "card8Title": "Quiosco de Empleados (Bottom-Up)",
+    "card8Text": "Terminales dinámicas para encuestas de evaluación de líderes (bottom-up), índice de clima laboral y seguimiento de polivalencia en formaciones.",
+    "card9Title": "Gestión de BOM y Herramientas",
+    "card9Text": "Control estructurado de la entrada/salida de herramientas, conexión a BOM productivos y registro de devoluciones de consumibles."
   },
   "IoT": {
     "sectionTitle": "Ecosistema IoT",
