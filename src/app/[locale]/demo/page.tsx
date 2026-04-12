@@ -1,12 +1,41 @@
+"use client";
+
 import Link from "next/link";
-import { MoveLeft, CheckCircle2 } from "lucide-react";
+import { MoveLeft, CheckCircle2, Loader2 } from "lucide-react";
 import "../../page.css";
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
 export default function DemoPage({ params: { locale } }: { params: { locale: string } }) {
   const tDemo = useTranslations('Demo');
   const tNav = useTranslations('Navigation');
   const tFooter = useTranslations('Footer');
+
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+    
+    const formData = new FormData(e.currentTarget);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch(err) {
+      setStatus('error');
+    }
+  };
 
   return (
     <main className="main-wrapper demo-main">
@@ -53,42 +82,61 @@ export default function DemoPage({ params: { locale } }: { params: { locale: str
                      Importante: Formspree usa a propriedade Name dos inputs para identificar a coluna no email.
                      Vou usar uma tag action universal. Depois o utilizador cadastra no Formspree o site contacto@sperosystems.pt 
                      */}
-                     <form action="https://formspree.io/f/myzyvkpj" method="POST" className="demo-form">
+                     <form onSubmit={handleSubmit} className="demo-form">
                         
-                        <div className="form-group">
-                           <label htmlFor="name">{tDemo('fname')} *</label>
-                           <input type="text" id="name" name="name" required className="form-input" />
-                        </div>
-                        
-                        <div className="form-group">
-                           <label htmlFor="email">{tDemo('femail')} *</label>
-                           <input type="email" id="email" name="email" required className="form-input" />
-                        </div>
-                        
-                        <div className="form-group-row">
-                           <div className="form-group">
-                              <label htmlFor="phone">{tDemo('fphone')} *</label>
-                              <input type="tel" id="phone" name="phone" required className="form-input" />
-                           </div>
-                           <div className="form-group">
-                              <label htmlFor="company">{tDemo('fcompany')} *</label>
-                              <input type="text" id="company" name="company" required className="form-input" />
-                           </div>
-                        </div>
+                        {status === 'success' ? (
+                          <div style={{ textAlign: 'center', padding: '2rem', color: '#10b981' }}>
+                             <CheckCircle2 size={48} style={{ margin: '0 auto 1rem' }} />
+                             <h3 style={{ fontSize: '1.4rem', color: 'white', marginBottom: '0.5rem' }}>Pedido Recebido!</h3>
+                             <p style={{ color: '#cbd5e1' }}>A nossa equipa comercial entrará em contacto muito brevemente.</p>
+                             <button type="button" onClick={() => setStatus('idle')} className="btn btn-outline" style={{ marginTop: '1.5rem' }}>
+                                Enviar Outro Pedido
+                             </button>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="form-group">
+                               <label htmlFor="name">{tDemo('fname')} *</label>
+                               <input type="text" id="name" name="name" required className="form-input" disabled={status === 'loading'} />
+                            </div>
+                            
+                            <div className="form-group">
+                               <label htmlFor="email">{tDemo('femail')} *</label>
+                               <input type="email" id="email" name="email" required className="form-input" disabled={status === 'loading'} />
+                            </div>
+                            
+                            <div className="form-group-row">
+                               <div className="form-group">
+                                  <label htmlFor="phone">{tDemo('fphone')} *</label>
+                                  <input type="tel" id="phone" name="phone" required className="form-input" disabled={status === 'loading'} />
+                               </div>
+                               <div className="form-group">
+                                  <label htmlFor="company">{tDemo('fcompany')} *</label>
+                                  <input type="text" id="company" name="company" required className="form-input" disabled={status === 'loading'} />
+                               </div>
+                            </div>
 
-                        <div className="form-group">
-                           <label htmlFor="role">{tDemo('frole')} *</label>
-                           <input type="text" id="role" name="role" required className="form-input" />
-                        </div>
-                        
-                        <div className="form-group">
-                           <label htmlFor="message">{tDemo('fmessage')}</label>
-                           <textarea id="message" name="message" rows={4} className="form-input"></textarea>
-                        </div>
+                            <div className="form-group">
+                               <label htmlFor="role">{tDemo('frole')} *</label>
+                               <input type="text" id="role" name="role" required className="form-input" disabled={status === 'loading'} />
+                            </div>
+                            
+                            <div className="form-group">
+                               <label htmlFor="message">{tDemo('fmessage')}</label>
+                               <textarea id="message" name="message" rows={4} className="form-input" disabled={status === 'loading'}></textarea>
+                            </div>
 
-                        <button type="submit" className="btn btn-primary submit-btn">
-                           {tDemo('btn')}
-                        </button>
+                            {status === 'error' && (
+                               <div style={{ padding: '0.8rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderLeft: '4px solid #ef4444', color: '#fca5a5', fontSize: '0.9rem' }}>
+                                  Ocorreu um erro no envio. Verifique as configurações de SMTP ou tente novamente mais tarde.
+                               </div>
+                            )}
+
+                            <button type="submit" className="btn btn-primary submit-btn" disabled={status === 'loading'}>
+                               {status === 'loading' ? <Loader2 className="lucide animate-spin" style={{ animation: 'spin 1s linear infinite' }} /> : tDemo('btn')}
+                            </button>
+                          </>
+                        )}
                      </form>
                   </div>
                </div>
