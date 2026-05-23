@@ -1,129 +1,16 @@
-:root {
-  /* Color Palette - Light Theme Corporate */
-  --color-bg-primary: #ffffff; 
-  --color-bg-secondary: #f4f7fb; 
-  --color-corporate-blue: #0A3D6B; /* Similar to Critical Mfg Navy */
-  --color-corporate-blue-light: #165b9e;
-  --color-action-blue: #007bff; 
-  
-  --color-text-main: #1f2937; /* Graphite */
-  --color-text-muted: #4b5563; /* Slate */
-  --color-white: #ffffff;
-  
-  --color-border: #e2e8f0;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* Utilities */
-  --border-radius: 4px;
-  --transition-speed: 0.3s;
-  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --box-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+  }
 }
 
 body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-main);
-  font-family: inherit;
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
-/* Typography Utilities */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--color-corporate-blue);
-}
-
-h1 {
-  font-size: 3rem;
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-size: 2.25rem;
-  margin-bottom: 1rem;
-}
-
-p {
-  color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
-}
-
-/* Layout Utilities */
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.section {
-  padding: 5rem 0;
-}
-
-/* Base Components */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: all var(--transition-speed) ease;
-  text-decoration: none;
-  font-size: 0.95rem;
-  border: none;
-}
-
-.btn-primary {
-  background-color: var(--color-action-blue);
-  color: var(--color-white);
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--color-corporate-blue);
-  border: 1px solid var(--color-corporate-blue);
-}
-
-.btn-outline:hover {
-  background-color: var(--color-corporate-blue);
-  color: var(--color-white);
-}
-
-/* Clean Card (Replaces Glass Card) */
-.clean-card {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.clean-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--box-shadow-hover);
-  border-color: var(--color-corporate-blue-light);
-}
-
-/* Text Gradient */
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(90deg, var(--color-corporate-blue), var(--color-action-blue));
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }

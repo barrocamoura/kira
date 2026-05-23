@@ -1,6 +1,6 @@
 {
-  "name": "spero-systems-website",
-  "version": "0.1.0",
+  "name": "aura-os",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,20 +9,34 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/nodemailer": "^8.0.0",
+    "@prisma/client": "^7.8.0",
+    "@react-three/drei": "^9.105.6",
+    "@react-three/fiber": "^8.16.2",
+    "@stripe/stripe-js": "^9.6.0",
+    "@supabase/auth-helpers-nextjs": "^0.15.0",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.1",
+    "@use-gesture/react": "^10.3.1",
+    "framer-motion": "^11.2.4",
     "lucide-react": "^0.378.0",
-    "next": "^14.2.3",
-    "next-intl": "^4.9.1",
-    "nodemailer": "^8.0.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "socket.io-client": "^4.8.3",
+    "stripe": "^22.1.1",
+    "three": "^0.164.0",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
-    "@types/node": "^20.12.12",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "eslint": "^8.57.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
     "eslint-config-next": "14.2.3",
-    "typescript": "^5.4.5"
+    "postcss": "^8",
+    "prisma": "^7.8.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
