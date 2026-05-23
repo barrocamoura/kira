@@ -188,8 +188,7 @@ export default function AutomationsBuilder({ onClose, spaceId }: { onClose: () =
             triggerDeviceId: data.trigger_device_id,
             triggerCondition: data.trigger_condition,
             actionDeviceId: data.action_device_id,
-            actionCommand: data.action_command,
-            isActive: data.is_active
+            actionCommand: data.action_command
           });
         }
       } catch(err) {
