@@ -1,0 +1,11 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
+  "/login/page": "app/login/page.js",
+  "/onboarding/page": "app/onboarding/page.js",
+  "/page": "app/page.js",
+  "/api/catalog/route": "app/api/catalog/route.js",
+  "/api/kira-vision/route": "app/api/kira-vision/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/automations/page": "app/dashboard/automations/page.js"
+}

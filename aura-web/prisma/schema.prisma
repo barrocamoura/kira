@@ -1,0 +1,36 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./aura_catalog.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Manufacturer {
+  id       String   @id @default(uuid())
+  name     String   @unique
+  logoUrl  String?
+  devices  UniversalDevice[]
+}
+
+model DeviceCategory {
+  id             String   @id @default(uuid())
+  name           String   // "Motion Sensor", "Relay", "Smart Plug"
+  engine3dType   String   // "motion_sensor", "ac", "light"
+  devices        UniversalDevice[]
+}
+
+model UniversalDevice {
+  id               String   @id @default(uuid())
+  manufacturerId   String
+  categoryId       String
+  modelName        String
+  productCode      String?
+  protocol         String   // "Zigbee", "Wi-Fi", "Z-Wave", "Matter"
+  isDiscontinued   Boolean  @default(false)
+  releaseYear      Int?
+
+  manufacturer     Manufacturer   @relation(fields: [manufacturerId], references: [id])
+  category         DeviceCategory @relation(fields: [categoryId], references: [id])
+}
