@@ -176,6 +176,7 @@ export default function AutomationsBuilder({ onClose, spaceId }: { onClose: () =
           action_command: 'turn_on' // Default mock
         };
         
+        if (!supabase) throw new Error("Supabase client not initialized.");
         const { data, error } = await supabase.from('automations').insert(newAuto).select().single();
         if (error) throw error;
         
