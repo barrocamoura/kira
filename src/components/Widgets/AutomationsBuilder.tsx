@@ -281,7 +281,7 @@ export default function AutomationsBuilder({ onClose, spaceId }: { onClose: () =
                 connectionLineStyle={{ stroke: '#6366f1', strokeWidth: 3 }}
                 defaultEdgeOptions={{ style: { stroke: '#6366f1', strokeWidth: 2 } }}
               >
-                <Background color="#ffffff" gap={20} size={1} opacity={0.05} />
+                <Background color="#ffffff" gap={20} size={1} />
                 <Controls className="bg-white/10 border-white/20 fill-white" />
               </ReactFlow>
             </ReactFlowProvider>
