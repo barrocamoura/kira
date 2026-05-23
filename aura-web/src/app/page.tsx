@@ -105,7 +105,28 @@ export default function LandingPage() {
               <h3 className="text-2xl font-bold mb-2">Aura Home</h3>
               <p className="text-white/50 mb-6">Para residentes e proprietários únicos.</p>
               <div className="text-5xl font-black mb-8">€19<span className="text-xl text-white/40 font-medium">/mês</span></div>
-              <button className="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 font-bold transition mb-8">Começar Agora</button>
+              <button 
+                onClick={async () => {
+                  try {
+                    const res = await fetch('/api/checkout', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ plan: 'home' })
+                    });
+                    const data = await res.json();
+                    if (data.url) {
+                      window.location.href = data.url;
+                    } else {
+                      alert(data.error || 'Erro ao iniciar pagamento.');
+                    }
+                  } catch(e) {
+                    alert('Erro na ligação.');
+                  }
+                }}
+                className="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 font-bold transition mb-8"
+              >
+                Começar Agora
+              </button>
               <ul className="space-y-3 text-sm text-white/70">
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"/> 1 Residência Principal</li>
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-blue-500"/> Motor 3D Interativo Completo</li>
