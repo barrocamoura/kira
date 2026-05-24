@@ -11,6 +11,7 @@ CREATE TABLE public.users (
   preferred_language VARCHAR(5) DEFAULT 'pt-BR',
   phone TEXT,
   status VARCHAR(20) DEFAULT 'active', -- 'active', 'blocked', 'suspended'
+  role VARCHAR(20) DEFAULT 'client', -- 'admin', 'ceo', 'support', 'influencer', 'client'
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -85,13 +86,10 @@ CREATE INDEX idx_rooms_space ON public.rooms(space_id);
 CREATE INDEX idx_space_members_user ON public.space_members(user_id);
 
 -- ==========================================
--- AURA ENTERPRISE (ROOT & TICKETING)
+-- AURA ENTERPRISE (ROOT, TICKETING & FINANCE)
 -- ==========================================
 
--- 1. Upgrade na tabela Users (Super Administradores do Root)
-ALTER TABLE public.users ADD COLUMN is_superadmin BOOLEAN DEFAULT FALSE;
-
--- 2. Sistema de Tickets (Helpdesk)
+-- 1. Sistema de Tickets (Helpdesk)
 CREATE TABLE public.tickets (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
@@ -102,14 +100,58 @@ CREATE TABLE public.tickets (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Mensagens dentro do Ticket
 CREATE TABLE public.ticket_messages (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   ticket_id UUID REFERENCES public.tickets(id) ON DELETE CASCADE,
-  sender_id UUID REFERENCES auth.users(id) ON DELETE SET NULL, -- Quem enviou (Cliente ou Suporte)
+  user_id UUID REFERENCES public.users(id), -- Quem respondeu (Cliente ou Support/Root)
   message TEXT NOT NULL,
+  is_staff_reply BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- 2. Sistema de Transações (Financial Hub)
+CREATE TABLE public.transactions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+  amount DECIMAL(10, 2) NOT NULL,
+  description TEXT,
+  status VARCHAR(20) DEFAULT 'paid', -- 'paid', 'pending', 'failed'
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Kiosk Settings (Kiosk Builder)
+CREATE TABLE public.kiosk_settings (
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE PRIMARY KEY,
+  widgets JSONB DEFAULT '{"news": true, "weather": true, "energy": true, "solar": false}',
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ==========================================
+-- TRIGGERS DE SINCRONIZAÇÃO NATIVA
+-- ==========================================
+CREATE OR REPLACE FUNCTION public.handle_new_user() 
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO public.users (id, full_name, avatar_url, role)
+  VALUES (
+    new.id, 
+    COALESCE(new.raw_user_meta_data->>'full_name', new.email),
+    COALESCE(new.raw_user_meta_data->>'avatar_url', ''),
+    'client'
+  )
+  ON CONFLICT (id) DO NOTHING;
+  
+  -- Já criar as configurações padrão do Kiosk
+  INSERT INTO public.kiosk_settings (user_id) VALUES (new.id) ON CONFLICT DO NOTHING;
+  
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
 CREATE INDEX idx_tickets_user ON public.tickets(user_id);
 CREATE INDEX idx_ticket_messages_ticket ON public.ticket_messages(ticket_id);

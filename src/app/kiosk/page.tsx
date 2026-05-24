@@ -1,23 +1,50 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Mic, Sun, Moon, CloudRain, Lightbulb, Power, Maximize } from 'lucide-react';
+import { Mic, Sun, Moon, CloudRain, Lightbulb, Power, Maximize, Zap, Battery, Newspaper } from 'lucide-react';
+import { createClient } from '@/utils/supabase/client';
 
 export default function KioskPage() {
   const [time, setTime] = useState(new Date());
   const [isNight, setIsNight] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
+  
+  // Custom Widgets State
+  const [kioskSettings, setKioskSettings] = useState<any>({
+    news: false,
+    weather: true,
+    energy: false,
+    solar: false
+  });
 
   useEffect(() => {
+    // 1. Clock and Theme Logic
     const timer = setInterval(() => {
       const now = new Date();
       setTime(now);
-      
-      // Lógica Simples Dia/Noite (Noite = das 19h às 06h)
       const hour = now.getHours();
       setIsNight(hour >= 19 || hour < 6);
     }, 1000);
+    
+    // 2. Load Settings from DB
+    const fetchSettings = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data } = await supabase
+          .from('kiosk_settings')
+          .select('widgets')
+          .eq('user_id', user.id)
+          .single();
+          
+        if (data && data.widgets) {
+          setKioskSettings(data.widgets);
+        }
+      }
+    };
+    fetchSettings();
+
     return () => clearInterval(timer);
   }, []);
 
@@ -41,7 +68,6 @@ export default function KioskPage() {
     recognition.onresult = (event: any) => {
       const text = event.results[0][0].transcript;
       setTranscript(`Comando registado: "${text}"`);
-      // Aqui faríamos a chamada à API da Aura (LLM) para traduzir o texto num comando JSON
       setTimeout(() => setTranscript(''), 4000);
     };
 
@@ -102,34 +128,79 @@ export default function KioskPage() {
         </div>
       </header>
 
-      {/* Main Widgets */}
-      <div className="flex-1 grid grid-cols-3 gap-6 mt-16 z-10">
-        {/* Clima */}
-        <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
-          <div>
-            <div className={`text-sm font-bold uppercase tracking-widest mb-1 ${subText}`}>Clima Exterior</div>
-            <div className="text-5xl font-black">18°C</div>
+      {/* Main Widgets Area */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-16 z-10">
+        
+        {/* WIDGET: Clima (Weather) */}
+        {kioskSettings.weather && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-1 ${subText}`}>Clima Exterior</div>
+              <div className="text-5xl font-black">18°C</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <CloudRain className="w-8 h-8 text-blue-400" />
+              <span className="text-xl font-medium">Chuva Leve</span>
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <CloudRain className="w-8 h-8 text-blue-400" />
-            <span className="text-xl font-medium">Chuva Leve</span>
-          </div>
-        </div>
+        )}
 
-        {/* Quick Controls */}
-        <div className={`col-span-2 rounded-3xl border p-8 ${cardClass}`}>
+        {/* WIDGET: Consumo Energético */}
+        {kioskSettings.energy && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-1 ${subText}`}>Consumo Total</div>
+              <div className="text-4xl font-black">2.4 kW</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Zap className="w-8 h-8 text-amber-500" />
+              <span className="text-lg font-medium">Dentro da média</span>
+            </div>
+          </div>
+        )}
+
+        {/* WIDGET: Geração Solar */}
+        {kioskSettings.solar && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-1 ${subText}`}>Painéis Solares</div>
+              <div className="text-4xl font-black text-emerald-500">4.1 kW</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Battery className="w-8 h-8 text-emerald-400" />
+              <span className="text-lg font-medium">Bateria a 100%</span>
+            </div>
+          </div>
+        )}
+
+        {/* Quick Controls (Sempre visível) */}
+        <div className={`col-span-1 md:col-span-2 xl:col-span-2 rounded-3xl border p-8 ${cardClass}`}>
           <div className={`text-sm font-bold uppercase tracking-widest mb-6 ${subText}`}>Acessos Rápidos</div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <button className={`flex flex-col items-center gap-3 p-6 rounded-2xl border transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500 ${isNight ? 'bg-white/5 border-white/10' : 'bg-white border-white'}`}>
               <Lightbulb className="w-8 h-8" />
               <span className="font-bold text-sm">Luzes Sala</span>
             </button>
             <button className={`flex flex-col items-center gap-3 p-6 rounded-2xl border transition-all hover:bg-red-500 hover:text-white hover:border-red-500 ${isNight ? 'bg-white/5 border-white/10' : 'bg-white border-white'}`}>
               <Power className="w-8 h-8" />
-              <span className="font-bold text-sm">Desligar Tudo</span>
+              <span className="font-bold text-sm text-center leading-tight">Desligar Tudo</span>
             </button>
           </div>
         </div>
+
+        {/* WIDGET: Notícias Locais */}
+        {kioskSettings.news && (
+          <div className={`col-span-1 md:col-span-3 xl:col-span-4 rounded-3xl border p-6 flex items-center gap-6 ${cardClass}`}>
+            <div className="w-16 h-16 rounded-2xl bg-blue-500 flex items-center justify-center shrink-0">
+              <Newspaper className="w-8 h-8 text-white" />
+            </div>
+            <div>
+              <div className={`text-xs font-bold uppercase tracking-widest mb-1 ${subText}`}>Últimas Notícias</div>
+              <div className="text-xl font-bold">Governo aprova novos incentivos para transição energética e painéis solares em 2027.</div>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* Voice Control Footer */}

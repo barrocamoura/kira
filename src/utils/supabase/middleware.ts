@@ -83,18 +83,28 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.redirect(url)
     }
     
-    // Check if user is superadmin
+    // Check user role
     const { data: userData } = await supabase
       .from('users')
-      .select('is_superadmin')
+      .select('role')
       .eq('id', user.id)
       .single()
       
-    if (!userData || !userData.is_superadmin) {
-      // Not superadmin, redirect to dashboard
+    if (!userData || (userData.role !== 'admin' && userData.role !== 'support' && userData.role !== 'ceo')) {
+      // Not admin or support, redirect to dashboard
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)
+    }
+
+    // Role-based restrictions within /root
+    if (userData.role === 'support') {
+      // Support can only access /root/tickets
+      if (request.nextUrl.pathname === '/root' || request.nextUrl.pathname.startsWith('/root/users')) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/root/tickets'
+        return NextResponse.redirect(url)
+      }
     }
   }
 
