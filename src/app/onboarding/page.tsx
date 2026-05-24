@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Bot, ArrowRight, Building, Home, Phone, User, CheckCircle2, ShieldAlert, Mail, Lock } from 'lucide-react';
-import { createClient } from '@/utils/supabase/client';
 import { submitOnboarding } from '@/app/actions/workspace';
 
 export default function Onboarding() {
@@ -29,24 +28,10 @@ export default function Onboarding() {
     setIsLoading(true);
 
     try {
-      const supabase = createClient();
-      
-      // 1. Criar o User no Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: 'http://localhost:3000', // Força um URL válido p/ contornar a validação de domínio do Supabase (ignorado se o Confirm Email estiver OFF)
-          data: {
-            full_name: fullName
-          }
-        }
-      });
-
-      if (authError) throw authError;
-
-      // 2. Chamar a Server Action para criar o Espaço (pois agora já há sessão)
       const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('fullName', fullName);
       formData.append('phone', phone);
       formData.append('spaceName', spaceName);
       formData.append('planType', planType);

@@ -6,16 +6,34 @@ import { redirect } from 'next/navigation'
 export async function submitOnboarding(formData: FormData) {
   const supabase = createClient()
   
-  // 1. Pega a sessão segura do usuário recém-logado
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) {
-    redirect('/login')
-  }
-
-  // 2. Extrai os dados do formulário
+  // 1. Extrai os dados do formulário
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const fullName = formData.get('fullName') as string
   const phone = formData.get('phone') as string
   const spaceName = formData.get('spaceName') as string
   const planType = formData.get('planType') as string
+
+  // 2. Criar o User no Supabase Auth usando o Server Client
+  // Ao usar o Server Client, não enviamos a Origin do browser, evitando o erro "Invalid path specified in request URL"
+  const { data: authData, error: authError } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      }
+    }
+  })
+
+  if (authError) return { error: `Erro no registo: ${authError.message}` }
+  
+  const user = authData.user
+  if (!user) {
+    return { error: 'Utilizador não foi criado corretamente.' }
+  }
+
+
 
   // 3. Atualiza os dados de contacto do Usuário
   const { error: userError } = await supabase
