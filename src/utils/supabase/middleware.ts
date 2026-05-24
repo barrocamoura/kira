@@ -99,10 +99,15 @@ export async function updateSession(request: NextRequest) {
 
     // Role-based restrictions within /root
     if (userData.role === 'support') {
-      // Support can only access /root/tickets
-      if (request.nextUrl.pathname === '/root' || request.nextUrl.pathname.startsWith('/root/users')) {
+      // Support can only access /root/operations
+      if (
+        request.nextUrl.pathname === '/root' || 
+        request.nextUrl.pathname.startsWith('/root/finance') ||
+        request.nextUrl.pathname.startsWith('/root/telemetry') ||
+        request.nextUrl.pathname.startsWith('/root/users')
+      ) {
         const url = request.nextUrl.clone()
-        url.pathname = '/root/tickets'
+        url.pathname = '/root/operations'
         return NextResponse.redirect(url)
       }
     }
