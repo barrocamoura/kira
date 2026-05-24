@@ -9,6 +9,7 @@ CREATE TABLE public.users (
   full_name TEXT NOT NULL,
   avatar_url TEXT,
   preferred_language VARCHAR(5) DEFAULT 'pt-BR',
+  phone TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -20,6 +21,7 @@ CREATE TABLE public.spaces (
   plan_type VARCHAR(20) DEFAULT 'home', -- 'home' ou 'enterprise'
   owner_id UUID REFERENCES public.users(id) NOT NULL,
   stripe_subscription_id TEXT, -- Ligação com o faturamento
+  trial_ends_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
