@@ -9,7 +9,11 @@ export default function SettingsPage() {
     news: true,
     weather: true,
     energy: true,
-    solar: false
+    solar: false,
+    calendar: false,
+    traffic: false,
+    cctv: false,
+    todo: false
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -88,6 +92,10 @@ export default function SettingsPage() {
               { id: 'energy', name: 'Consumo Energético', desc: 'Gráficos de energia e potência da casa' },
               { id: 'solar', name: 'Geração Solar', desc: 'Produção fotovoltaica e fluxo de bateria' },
               { id: 'news', name: 'Notícias Locais', desc: 'Feed RSS com os principais destaques' },
+              { id: 'calendar', name: 'Agenda Familiar', desc: 'Próximos eventos e compromissos' },
+              { id: 'traffic', name: 'Trânsito para o Trabalho', desc: 'Tempo estimado e rotas do Google Maps' },
+              { id: 'cctv', name: 'Câmaras (CCTV)', desc: 'Feeds de vídeo ao vivo das câmaras de segurança' },
+              { id: 'todo', name: 'Lista de Compras/Tarefas', desc: 'Lembretes e notas sincronizadas' },
             ].map(widget => (
               <div 
                 key={widget.id}

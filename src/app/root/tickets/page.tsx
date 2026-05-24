@@ -16,7 +16,7 @@ export default function RootTickets() {
     setLoading(true);
     const { data, error } = await supabase
       .from('tickets')
-      .select('*, user:users(full_name, email), ticket_messages(message, created_at, sender_id, sender:users(full_name))')
+      .select('*, author:users!tickets_user_id_fkey(full_name), ticket_messages(message, created_at, user_id, author:users!ticket_messages_user_id_fkey(full_name))')
       .order('created_at', { ascending: false });
 
     if (!error && data) {
@@ -39,7 +39,7 @@ export default function RootTickets() {
       .from('ticket_messages')
       .insert({
         ticket_id: selectedTicket.id,
-        sender_id: user.id,
+        user_id: user.id,
         message: replyText
       });
 
@@ -48,15 +48,12 @@ export default function RootTickets() {
     } else {
       setReplyText('');
       fetchTickets();
-      // Update selected ticket in local state immediately or let fetchTickets handle it.
-      // Easiest is to just clear selection and re-select or let the user click again.
-      // For a seamless experience, we should re-fetch and update `selectedTicket`.
       const updatedTicket = { ...selectedTicket };
       updatedTicket.ticket_messages.push({
         message: replyText,
         created_at: new Date().toISOString(),
-        sender_id: user.id,
-        sender: { full_name: 'Admin' }
+        user_id: user.id,
+        author: { full_name: 'Admin' }
       });
       setSelectedTicket(updatedTicket);
     }
@@ -120,7 +117,7 @@ export default function RootTickets() {
                     <span className="text-sm font-bold text-white truncate pr-2">{t.subject}</span>
                     <span className="text-[10px] text-slate-500 whitespace-nowrap">{new Date(t.created_at).toLocaleDateString()}</span>
                   </div>
-                  <div className="text-xs font-semibold text-slate-400 mb-2">{t.user?.full_name || 'Cliente'}</div>
+                  <div className="text-xs font-semibold text-slate-400 mb-2">{t.author?.full_name || 'Cliente'}</div>
                   <div className="mt-3 flex gap-2">
                     {t.status === 'open' ? (
                        <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-[10px] font-bold rounded uppercase">Aberto</span>
@@ -146,7 +143,7 @@ export default function RootTickets() {
               <div className="p-6 border-b border-slate-800 bg-black/80 backdrop-blur-md flex justify-between items-center z-10">
                 <div>
                   <h3 className="text-lg font-bold text-white mb-1">{selectedTicket.subject}</h3>
-                  <p className="text-xs text-slate-400">De: {selectedTicket.user?.full_name} ({selectedTicket.user?.email})</p>
+                  <p className="text-xs text-slate-400">De: {selectedTicket.author?.full_name}</p>
                 </div>
                 {selectedTicket.status === 'open' && (
                   <button onClick={markAsResolved} className="flex items-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">
@@ -157,7 +154,7 @@ export default function RootTickets() {
 
               <div className="flex-1 p-6 overflow-y-auto flex flex-col gap-6 z-10">
                 {selectedTicket.ticket_messages?.map((msg: any, i: number) => {
-                  const isClient = msg.sender_id === selectedTicket.user_id;
+                  const isClient = msg.user_id === selectedTicket.user_id;
                   
                   return (
                     <div key={i} className={`flex gap-4 max-w-2xl ${isClient ? '' : 'self-end flex-row-reverse'}`}>
@@ -167,7 +164,7 @@ export default function RootTickets() {
                       <div className={isClient ? 'text-left' : 'text-right'}>
                         <div className={`flex items-center gap-2 mb-1 ${isClient ? '' : 'justify-end'}`}>
                           <span className={`font-bold text-sm ${isClient ? 'text-white' : 'text-blue-400'}`}>
-                            {isClient ? selectedTicket.user?.full_name : 'Aura Support'}
+                            {isClient ? selectedTicket.author?.full_name : 'Aura Support'}
                           </span>
                           <span className="text-xs text-slate-500">{new Date(msg.created_at).toLocaleString()}</span>
                         </div>

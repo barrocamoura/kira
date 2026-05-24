@@ -14,7 +14,7 @@ export default function RootUsersPage() {
     // Fetch users with their spaces
     const { data: usersData, error } = await supabase
       .from('users')
-      .select('*, spaces(id, name, plan_type)')
+      .select('*')
       .order('created_at', { ascending: false });
 
     if (!error && usersData) {

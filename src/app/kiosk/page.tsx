@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Mic, Sun, Moon, CloudRain, Lightbulb, Power, Maximize, Zap, Battery, Newspaper } from 'lucide-react';
+import { Mic, Sun, Moon, CloudRain, Lightbulb, Power, Maximize, Zap, Battery, Newspaper, Calendar, Car, Camera, CheckSquare } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 
 export default function KioskPage() {
@@ -15,7 +15,11 @@ export default function KioskPage() {
     news: false,
     weather: true,
     energy: false,
-    solar: false
+    solar: false,
+    calendar: false,
+    traffic: false,
+    cctv: false,
+    todo: false
   });
 
   useEffect(() => {
@@ -187,6 +191,75 @@ export default function KioskPage() {
             </button>
           </div>
         </div>
+
+        {/* WIDGET: Agenda Familiar */}
+        {kioskSettings.calendar && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-3 ${subText}`}>Agenda de Hoje</div>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-blue-500" />
+                  <span className="font-bold">14:00 - Reunião com Arquitetos</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span className="font-bold">18:30 - Jantar de Aniversário</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-slate-500 text-sm font-bold">
+              <Calendar className="w-4 h-4" /> 2 Eventos pendentes
+            </div>
+          </div>
+        )}
+
+        {/* WIDGET: Trânsito */}
+        {kioskSettings.traffic && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-1 ${subText}`}>Trânsito p/ Escritório</div>
+              <div className="text-4xl font-black text-amber-500">28 min</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Car className="w-8 h-8 text-amber-500" />
+              <span className="text-sm font-bold">Trânsito intenso na A5. +10 min de atraso.</span>
+            </div>
+          </div>
+        )}
+
+        {/* WIDGET: Lista de Compras/Tarefas */}
+        {kioskSettings.todo && (
+          <div className={`rounded-3xl border p-8 flex flex-col justify-between ${cardClass}`}>
+            <div>
+              <div className={`text-sm font-bold uppercase tracking-widest mb-3 ${subText}`}>Lista de Compras</div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3 text-slate-400 line-through">
+                  <CheckSquare className="w-5 h-5 text-emerald-500" /> Leite e Ovos
+                </div>
+                <div className="flex items-center gap-3 font-bold">
+                  <div className="w-5 h-5 rounded border border-slate-500" /> Cápsulas Nespresso
+                </div>
+                <div className="flex items-center gap-3 font-bold">
+                  <div className="w-5 h-5 rounded border border-slate-500" /> Fruta
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* WIDGET: CCTV Câmaras */}
+        {kioskSettings.cctv && (
+          <div className={`col-span-1 md:col-span-2 xl:col-span-2 rounded-3xl border p-6 flex flex-col gap-3 ${cardClass}`}>
+            <div className={`text-sm font-bold uppercase tracking-widest ${subText} flex items-center gap-2`}>
+              <Camera className="w-4 h-4" /> Câmaras de Segurança
+            </div>
+            <div className="flex-1 rounded-2xl bg-slate-900/50 border border-slate-800 flex items-center justify-center relative overflow-hidden group">
+              <div className="absolute top-2 left-2 px-2 py-1 bg-red-500 text-white text-[10px] font-bold rounded uppercase animate-pulse">Ao Vivo</div>
+              <span className="text-slate-600 font-bold">Entrada Principal (Sem Sinal)</span>
+            </div>
+          </div>
+        )}
 
         {/* WIDGET: Notícias Locais */}
         {kioskSettings.news && (
