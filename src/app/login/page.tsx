@@ -46,7 +46,7 @@ export default function LoginPage() {
         .from('users')
         .select('is_superadmin')
         .eq('id', data.user.id)
-        .single();
+        .maybeSingle();
 
       if (userData?.is_superadmin) {
         router.push('/root');

@@ -16,36 +16,41 @@ export async function submitOnboarding(formData: FormData) {
   const spaceName = formData.get('spaceName') as string
   const planType = formData.get('planType') as string
 
-  // Ao usar o Server Client, não enviamos a Origin do browser, mas vamos garantir
-  // que o emailRedirectTo é explicitamente válido para evitar o erro do "Invalid path"
-  const { data: authData, error: authError } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: fullName
-      }
-    }
-  })
+  // Verifica se o utilizador já tem sessão iniciada (preso em limbo)
+  const { data: { user: currentUser } } = await supabase.auth.getUser()
+  
+  let user = currentUser;
 
-  if (authError) {
-    return { error: `Erro no registo: ${authError.message}` }
+  // Se não estiver logado, cria a conta
+  if (!user) {
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName
+        }
+      }
+    })
+
+    if (authError) {
+      return { error: `Erro no registo: ${authError.message}` }
+    }
+    user = authData.user
   }
   
-  const user = authData.user
   if (!user) {
     return { error: 'Utilizador não foi criado corretamente.' }
   }
 
-
-
-  // 3. Atualiza os dados de contacto do Usuário
+  // 3. Cria ou Atualiza os dados do Usuário na tabela public.users
   const { error: userError } = await supabase
     .from('users')
-    .update({ 
+    .upsert({ 
+      id: user.id,
+      full_name: fullName,
       phone: phone
     })
-    .eq('id', user.id)
 
   if (userError) return { error: `Erro ao salvar perfil: ${userError.message}` }
 
