@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
-import { Sparkles, LayoutDashboard, Box, Workflow, Settings, LogOut, Home, Building } from 'lucide-react';
+import { Sparkles, LayoutDashboard, Box, Workflow, Settings, LogOut, Home, Building, LifeBuoy } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -54,10 +54,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             Gestão Enterprise
           </a>
 
-          <div className="text-xs font-semibold text-white/40 mb-2 mt-8 uppercase tracking-wider">Conta</div>
+          <div className="text-xs font-semibold text-white/40 mb-2 mt-8 uppercase tracking-wider">Conta & Suporte</div>
           <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition">
             <Settings className="w-5 h-5" />
             Configurações
+          </a>
+          <a href="/dashboard/support" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition">
+            <LifeBuoy className="w-5 h-5 text-emerald-400" />
+            Aura Care (Suporte)
           </a>
         </nav>
 
