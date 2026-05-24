@@ -25,7 +25,7 @@ export async function submitOnboarding(formData: FormData) {
     })
     .eq('id', user.id)
 
-  if (userError) throw new Error(`Erro ao salvar perfil: ${userError.message}`)
+  if (userError) return { error: `Erro ao salvar perfil: ${userError.message}` }
 
   // 4. Cria o "Tenant" (O Espaço Físico do Cliente) e Inicia a contagem do Trial de 15 Dias
   // No PostgreSQL o valor de trial_ends_at será calculado com NOW() + 15 days via trigger ou inserção.
@@ -44,7 +44,7 @@ export async function submitOnboarding(formData: FormData) {
     .select()
     .single()
 
-  if (spaceError) throw new Error(`Erro ao criar espaço: ${spaceError.message}`)
+  if (spaceError) return { error: `Erro ao criar espaço: ${spaceError.message}` }
 
   // 5. Conecta o Usuário ao Espaço como Administrador Supremo (RBAC)
   const { error: memberError } = await supabase
@@ -55,8 +55,8 @@ export async function submitOnboarding(formData: FormData) {
       role: 'admin'
     })
 
-  if (memberError) throw new Error(`Erro ao atribuir permissão: ${memberError.message}`)
+  if (memberError) return { error: `Erro ao atribuir permissão: ${memberError.message}` }
 
-  // 6. Tudo pronto, ejetamos ele para o Dashboard Operacional
-  redirect('/dashboard')
+  // 6. Tudo pronto, retornamos sucesso
+  return { success: true, error: null }
 }
