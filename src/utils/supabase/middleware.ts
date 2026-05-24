@@ -75,6 +75,29 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Protect /root (Aura Backoffice)
+  if (request.nextUrl.pathname.startsWith('/root')) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+    
+    // Check if user is superadmin
+    const { data: userData } = await supabase
+      .from('users')
+      .select('is_superadmin')
+      .eq('id', user.id)
+      .single()
+      
+    if (!userData || !userData.is_superadmin) {
+      // Not superadmin, redirect to dashboard
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
+  }
+
   // Redirect logged-in users away from /login
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()
