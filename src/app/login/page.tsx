@@ -2,23 +2,21 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Sparkles, ArrowRight, Lock, Mail, UserPlus, LogIn } from 'lucide-react';
+import { Sparkles, ArrowRight, Lock, Mail, LogIn } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
   const router = useRouter();
 
-  const handleAuth = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return;
-    if (isSignUp && !fullName) return;
     
     setErrorMsg('');
     setIsLoading(true);
@@ -27,46 +25,37 @@ export default function LoginPage() {
       const supabase = createClient();
       if (!supabase) throw new Error("Chaves Supabase em falta.");
 
-      if (isSignUp) {
-        // Registo
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: fullName
-            },
-            emailRedirectTo: `${window.location.origin}/onboarding`
-          }
-        });
+      // Apenas Login! O registo é feito pelo Funil de Trial (/onboarding)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) throw error;
+      
+      // Verifica se o user já completou o onboarding (se tem um espaço)
+      const { data: spaces } = await supabase
+        .from('spaces')
+        .select('id')
+        .eq('owner_id', data.user.id)
+        .limit(1);
         
-        if (error) throw error;
-        
-        // Registo com sucesso - Em modo de demonstração sem confirmação de email
-        // ele faz login automaticamente e redereciona
-        router.push('/onboarding');
+      // Redireciona de acordo com o status
+      // Mesmo no login normal, redireciona para root se for superadmin. O middleware deixará passar.
+      const { data: userData } = await supabase
+        .from('users')
+        .select('is_superadmin')
+        .eq('id', data.user.id)
+        .single();
+
+      if (userData?.is_superadmin) {
+        router.push('/root');
+      } else if (spaces && spaces.length > 0) {
+        router.push('/dashboard');
       } else {
-        // Login
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        
-        if (error) throw error;
-        
-        // Verifica se o user já completou o onboarding (se tem um espaço)
-        const { data: spaces } = await supabase
-          .from('spaces')
-          .select('id')
-          .eq('owner_id', data.user.id)
-          .limit(1);
-          
-        if (spaces && spaces.length > 0) {
-          router.push('/dashboard');
-        } else {
-          router.push('/onboarding');
-        }
+        router.push('/onboarding');
       }
+      
     } catch (err: any) {
       console.error(err);
       setErrorMsg(err.message || 'Ocorreu um erro na autenticação.');
@@ -87,51 +76,16 @@ export default function LoginPage() {
             <Sparkles className="w-8 h-8 text-indigo-400" />
           </div>
           <h1 className="text-3xl font-black text-white tracking-tighter">Aura OS</h1>
-          <p className="text-white/50 text-sm mt-2 uppercase tracking-widest font-bold">Portal de Acesso Seguro</p>
+          <p className="text-white/50 text-sm mt-2 uppercase tracking-widest font-bold">Acesso à Plataforma</p>
         </div>
         
-        {/* Toggle Modo */}
-        <div className="flex p-1 bg-black/40 rounded-xl mb-6 border border-white/5">
-          <button 
-            type="button"
-            onClick={() => {setIsSignUp(false); setErrorMsg('');}}
-            className={`flex-1 py-2 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2 ${!isSignUp ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30' : 'text-white/50 hover:text-white'}`}
-          >
-            <LogIn className="w-4 h-4" /> Entrar
-          </button>
-          <button 
-            type="button"
-            onClick={() => {setIsSignUp(true); setErrorMsg('');}}
-            className={`flex-1 py-2 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2 ${isSignUp ? 'bg-purple-600/20 text-purple-400 border border-purple-500/30' : 'text-white/50 hover:text-white'}`}
-          >
-            <UserPlus className="w-4 h-4" /> Criar Conta
-          </button>
-        </div>
-
         {errorMsg && (
           <div className="mb-6 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm text-center font-semibold">
             {errorMsg}
           </div>
         )}
 
-        <form onSubmit={handleAuth} className="flex flex-col gap-5">
-          
-          {isSignUp && (
-            <div className="flex flex-col gap-2 animate-in slide-in-from-top-2 fade-in">
-              <label className="text-xs text-white/50 uppercase font-bold tracking-widest">Nome Completo</label>
-              <div className="relative">
-                <UserPlus className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                <input 
-                  type="text" 
-                  value={fullName}
-                  onChange={e => setFullName(e.target.value)}
-                  placeholder="Seu Nome"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition shadow-inner"
-                />
-              </div>
-            </div>
-          )}
-
+        <form onSubmit={handleLogin} className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="text-xs text-white/50 uppercase font-bold tracking-widest">E-mail</label>
             <div className="relative">
@@ -162,17 +116,20 @@ export default function LoginPage() {
 
           <button 
             type="submit" 
-            disabled={isLoading || !email || !password || (isSignUp && !fullName)}
+            disabled={isLoading || !email || !password}
             className="mt-4 w-full bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "A Processar..." : (isSignUp ? "Criar Conta Segura" : "Entrar no Sistema")}
+            {isLoading ? "A Validar..." : "Entrar no Sistema"}
             {!isLoading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
           </button>
         </form>
 
-        <p className="text-center text-xs text-white/30 mt-8">
-          Acesso reservado a clientes integradores e arquitetos. <br/> Protegido por criptografia AES-256.
-        </p>
+        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          <p className="text-sm text-white/50">Ainda não é cliente?</p>
+          <Link href="/onboarding" className="mt-2 inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-bold transition">
+            <Sparkles className="w-4 h-4" /> Iniciar Teste Grátis de 15 Dias
+          </Link>
+        </div>
       </div>
     </div>
   );
