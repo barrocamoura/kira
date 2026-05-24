@@ -1,5 +1,23 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/catalog/route": "app/api/catalog/route.js",
+  "/api/kira-vision/route": "app/api/kira-vision/route.js",
+  "/api/checkout/route": "app/api/checkout/route.js",
+  "/api/webhooks/route": "app/api/webhooks/route.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
+  "/blocked/page": "app/blocked/page.js",
+  "/kiosk/page": "app/kiosk/page.js",
+  "/login/page": "app/login/page.js",
+  "/onboarding/page": "app/onboarding/page.js",
   "/page": "app/page.js",
+  "/dashboard/enterprise/page": "app/dashboard/enterprise/page.js",
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
+  "/dashboard/environments/page": "app/dashboard/environments/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/automations/page": "app/dashboard/automations/page.js"
+  "/dashboard/automations/page": "app/dashboard/automations/page.js",
+  "/dashboard/builder/page": "app/dashboard/builder/page.js",
+  "/root/page": "app/root/page.js",
+  "/root/users/page": "app/root/users/page.js",
+  "/dashboard/support/page": "app/dashboard/support/page.js",
+  "/root/tickets/page": "app/root/tickets/page.js"
 }

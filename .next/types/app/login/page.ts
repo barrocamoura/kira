@@ -1,4 +1,4 @@
-// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/aura-web/src/app/login/page.tsx
+// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/src/app/login/page.tsx
 import * as entry from '../../../../src/app/login/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

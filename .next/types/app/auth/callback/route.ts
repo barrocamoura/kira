@@ -1,4 +1,4 @@
-// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/aura-web/src/app/auth/callback/route.ts
+// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/src/app/auth/callback/route.ts
 import * as entry from '../../../../../src/app/auth/callback/route.js'
 import type { NextRequest } from 'next/server.js'
 

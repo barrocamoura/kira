@@ -1,4 +1,4 @@
-// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/aura-web/src/app/api/kira-vision/route.ts
+// File: /Users/alessandromoura/.gemini/antigravity/playground/azure-juno/src/app/api/kira-vision/route.ts
 import * as entry from '../../../../../src/app/api/kira-vision/route.js'
 import type { NextRequest } from 'next/server.js'
 

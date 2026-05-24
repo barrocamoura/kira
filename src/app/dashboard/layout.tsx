@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import { Sparkles, LayoutDashboard, Box, Workflow, Settings, LogOut, Home, Building, LifeBuoy } from 'lucide-react';
+import { Sparkles, LayoutDashboard, Box, Workflow, Settings, LogOut, Home, Building, LifeBuoy, MonitorSmartphone } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -59,6 +59,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <a href="/dashboard/enterprise" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/70 hover:text-white transition">
             <Building className="w-5 h-5" />
             Gestão Enterprise
+          </a>
+          <a href="/kiosk" target="_blank" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-amber-400/70 hover:text-amber-400 transition">
+            <MonitorSmartphone className="w-5 h-5" />
+            Painel Kiosk (Tablet)
           </a>
 
           <div className="text-xs font-semibold text-white/40 mb-2 mt-8 uppercase tracking-wider">Conta & Suporte</div>
