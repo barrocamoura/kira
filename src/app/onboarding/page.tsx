@@ -36,11 +36,10 @@ export default function Onboarding() {
         email,
         password,
         options: {
+          emailRedirectTo: 'http://localhost:3000', // Força um URL válido p/ contornar a validação de domínio do Supabase (ignorado se o Confirm Email estiver OFF)
           data: {
             full_name: fullName
-          },
-          // Ignorar email de verificação em ambiente de teste
-          emailRedirectTo: `${window.location.origin}/dashboard`
+          }
         }
       });
 

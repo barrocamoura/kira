@@ -202,8 +202,8 @@ export default function AuraLandingPage() {
 
       {/* Stripe Embedded Checkout Modal */}
       {showCheckout && clientSecret && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl w-full max-w-4xl min-h-[600px] my-auto relative shadow-2xl animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm overflow-y-auto p-4 md:p-8">
+          <div className="bg-white rounded-3xl w-full max-w-4xl mx-auto mt-10 mb-20 relative shadow-2xl animate-in zoom-in-95 duration-300 min-h-[500px]">
             <button 
               onClick={() => setShowCheckout(false)}
               className="absolute top-4 right-4 z-10 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition"
