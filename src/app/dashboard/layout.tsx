@@ -2,22 +2,29 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/useAuthStore';
+import { createClient } from '@/utils/supabase/client';
 import { Sparkles, LayoutDashboard, Box, Workflow, Settings, LogOut, Home, Building, LifeBuoy } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { isAuthenticated, user, logout } = useAuthStore();
   const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     setMounted(true);
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
+    const checkUser = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push('/login');
+      } else {
+        setUser(user);
+      }
+    };
+    checkUser();
+  }, [router]);
 
-  if (!mounted || !isAuthenticated) {
+  if (!mounted || !user) {
     return <div className="min-h-screen bg-black flex items-center justify-center text-white font-mono tracking-widest text-xs uppercase">A verificar credenciais de acesso...</div>;
   }
   return (
@@ -66,7 +73,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         <div className="mt-auto pt-8 border-t border-white/10">
-          <button onClick={() => { logout(); router.push('/login'); }} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/50 hover:text-red-400 transition w-full text-left">
+          <button onClick={async () => { 
+            const supabase = createClient();
+            await supabase.auth.signOut();
+            router.push('/login'); 
+          }} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/50 hover:text-red-400 transition w-full text-left">
             <LogOut className="w-5 h-5" />
             Sair do Sistema
           </button>
