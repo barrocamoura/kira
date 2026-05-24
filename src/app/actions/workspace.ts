@@ -14,12 +14,13 @@ export async function submitOnboarding(formData: FormData) {
   const spaceName = formData.get('spaceName') as string
   const planType = formData.get('planType') as string
 
-  // 2. Criar o User no Supabase Auth usando o Server Client
-  // Ao usar o Server Client, não enviamos a Origin do browser, evitando o erro "Invalid path specified in request URL"
+  // Ao usar o Server Client, não enviamos a Origin do browser, mas vamos garantir
+  // que o emailRedirectTo é explicitamente válido para evitar o erro do "Invalid path"
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
+      emailRedirectTo: 'http://localhost:3000', // Override force
       data: {
         full_name: fullName
       }
