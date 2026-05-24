@@ -2,9 +2,11 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 
 export async function submitOnboarding(formData: FormData) {
   const supabase = createClient()
+  const origin = headers().get('origin')
   
   // 1. Extrai os dados do formulário
   const email = formData.get('email') as string
@@ -20,6 +22,7 @@ export async function submitOnboarding(formData: FormData) {
     email,
     password,
     options: {
+      emailRedirectTo: `${origin}/dashboard`,
       data: {
         full_name: fullName
       }
