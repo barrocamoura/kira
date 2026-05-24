@@ -45,19 +45,8 @@ export default function Onboarding() {
         <form action={submitOnboarding} className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
           <input type="hidden" name="planType" value={planType} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div>
-              <label className="text-sm font-medium text-white/70 block mb-2 flex items-center gap-2">
-                <User className="w-4 h-4" /> Nome Completo
-              </label>
-              <input 
-                type="text" 
-                name="fullName"
-                placeholder="Ex: Alessandro Moura" 
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition"
-                required
-              />
-            </div>
+          <div className="flex flex-col gap-6 mb-8">
+
             <div>
               <label className="text-sm font-medium text-white/70 block mb-2 flex items-center gap-2">
                 <Phone className="w-4 h-4" /> Telemóvel / WhatsApp

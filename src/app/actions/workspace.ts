@@ -13,19 +13,17 @@ export async function submitOnboarding(formData: FormData) {
   }
 
   // 2. Extrai os dados do formulário
-  const fullName = formData.get('fullName') as string
   const phone = formData.get('phone') as string
   const spaceName = formData.get('spaceName') as string
   const planType = formData.get('planType') as string
 
-  // 3. Registra os dados completos do Usuário (Nome e Contato)
+  // 3. Atualiza os dados de contacto do Usuário
   const { error: userError } = await supabase
     .from('users')
-    .upsert({ 
-      id: user.id, 
-      full_name: fullName,
-      phone: phone // Nova coluna que vamos criar
+    .update({ 
+      phone: phone
     })
+    .eq('id', user.id)
 
   if (userError) throw new Error(`Erro ao salvar perfil: ${userError.message}`)
 
