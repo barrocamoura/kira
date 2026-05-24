@@ -98,6 +98,21 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
+  // Verifica se a conta está bloqueada (para qualquer rota autenticada)
+  if (user && !request.nextUrl.pathname.startsWith('/blocked') && !request.nextUrl.pathname.startsWith('/login')) {
+    const { data: userData } = await supabase
+      .from('users')
+      .select('status')
+      .eq('id', user.id)
+      .maybeSingle()
+      
+    if (userData && userData.status === 'blocked') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/blocked'
+      return NextResponse.redirect(url)
+    }
+  }
+
   // Redirect logged-in users away from /login
   if (request.nextUrl.pathname === '/login' && user) {
     const url = request.nextUrl.clone()

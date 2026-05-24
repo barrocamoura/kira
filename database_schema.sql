@@ -10,6 +10,7 @@ CREATE TABLE public.users (
   avatar_url TEXT,
   preferred_language VARCHAR(5) DEFAULT 'pt-BR',
   phone TEXT,
+  status VARCHAR(20) DEFAULT 'active', -- 'active', 'blocked', 'suspended'
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
