@@ -26,25 +26,25 @@ export async function POST(request: Request) {
       priceId = process.env.STRIPE_PRICE_ENTERPRISE || "price_mock_aura_enterprise";
     }
 
-    // Criar a Sessão de Checkout
+    // Criar a Sessão de Checkout (Modo Embedded)
     const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
       payment_method_types: ['card'],
       mode: 'subscription',
       line_items: [
         {
-          price: priceId, // Requires creating a Product and Price in Stripe Dashboard
+          price: priceId,
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/dashboard?payment=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/?payment=cancelled`,
+      return_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/dashboard?payment=success&session_id={CHECKOUT_SESSION_ID}`,
       metadata: {
         userId: userId || 'anonymous',
         spaceId: spaceId || 'new_space',
       },
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ clientSecret: session.client_secret });
   } catch (error: any) {
     console.error("Stripe Checkout Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

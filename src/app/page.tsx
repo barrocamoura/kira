@@ -1,8 +1,16 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
+import { X } from 'lucide-react';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function AuraLandingPage() {
+  const [clientSecret, setClientSecret] = useState('');
+  const [showCheckout, setShowCheckout] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-emerald-500/30 font-sans overflow-x-hidden">
       
@@ -146,8 +154,9 @@ export default function AuraLandingPage() {
                       body: JSON.stringify({ plan: 'home' })
                     });
                     const data = await res.json();
-                    if (data.url) {
-                      window.location.href = data.url;
+                    if (data.clientSecret) {
+                      setClientSecret(data.clientSecret);
+                      setShowCheckout(true);
                     } else {
                       alert(data.error || 'Erro ao iniciar pagamento.');
                     }
@@ -190,6 +199,25 @@ export default function AuraLandingPage() {
       <footer className="py-12 border-t border-white/10 text-center text-white/30 text-sm">
         <p>© 2026 Aura OS by Spero Systems. All rights reserved.</p>
       </footer>
+
+      {/* Stripe Embedded Checkout Modal */}
+      {showCheckout && clientSecret && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative shadow-2xl animate-in zoom-in-95 duration-300">
+            <button 
+              onClick={() => setShowCheckout(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="h-full overflow-y-auto p-4 md:p-8">
+              <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
