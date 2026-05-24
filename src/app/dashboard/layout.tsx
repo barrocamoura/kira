@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 p-[2px]">
               <div className="w-full h-full bg-black rounded-full flex items-center justify-center font-bold text-sm">
-                {user?.name.substring(0, 2).toUpperCase()}
+                {(user?.user_metadata?.full_name?.substring(0, 2) || 'US').toUpperCase()}
               </div>
             </div>
           </div>
