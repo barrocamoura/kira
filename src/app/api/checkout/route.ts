@@ -18,13 +18,12 @@ export async function POST(request: Request) {
 
     const { plan, userId, spaceId } = await request.json();
 
-    // Default to Aura Home plan price if not specified
-    // Em produção, deve substituir pelo Price ID verdadeiro do seu dashboard Stripe (ex: price_1xyz...)
-    let priceId = "price_mock_aura_home"; 
+    // Utilizar os IDs reais configurados no .env
+    let priceId = process.env.STRIPE_PRICE_HOME || "price_mock_aura_home"; 
     
     // We can also accept an arbitrary price or look it up based on 'plan'
     if (plan === 'enterprise') {
-      priceId = "price_mock_aura_enterprise";
+      priceId = process.env.STRIPE_PRICE_ENTERPRISE || "price_mock_aura_enterprise";
     }
 
     // Criar a Sessão de Checkout
