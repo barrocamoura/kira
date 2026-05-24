@@ -20,7 +20,7 @@ export async function submitOnboarding(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: 'http://localhost:3000', // Override force
+      emailRedirectTo: 'https://kira-aura-so.vercel.app',
       data: {
         full_name: fullName
       }
