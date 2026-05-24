@@ -130,6 +130,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Workflow className="w-6 h-6" />
           <span className="text-[10px] font-bold">Cenas</span>
         </a>
+        <a href="/kiosk" target="_blank" className="flex flex-col items-center gap-1 text-amber-400/50 hover:text-amber-400 transition">
+          <MonitorSmartphone className="w-6 h-6" />
+          <span className="text-[10px] font-bold">Kiosk</span>
+        </a>
         <a href="/dashboard/settings" className="flex flex-col items-center gap-1 text-white/50 hover:text-blue-400 transition">
           <Settings className="w-6 h-6" />
           <span className="text-[10px] font-bold">Ajustes</span>
