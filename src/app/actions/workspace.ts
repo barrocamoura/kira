@@ -29,8 +29,7 @@ export async function submitOnboarding(formData: FormData) {
   })
 
   if (authError) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'missing'
-    return { error: `Erro no registo: ${authError.message}. DIAG: org=${origin} | url=${supabaseUrl}` }
+    return { error: `Erro no registo: ${authError.message}` }
   }
   
   const user = authData.user
