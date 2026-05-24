@@ -22,7 +22,6 @@ export async function submitOnboarding(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: origin ? `${origin}/dashboard` : 'https://kira-aura-so.vercel.app/dashboard',
       data: {
         full_name: fullName
       }
