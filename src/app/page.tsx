@@ -15,11 +15,12 @@ export default function AuraLandingPage() {
   const [isAnnual, setIsAnnual] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
   
-  const [kiraIndex, setKiraIndex] = useState(0);
-  const kiraCommands = [
-    { text: '"Kira, prepara a sala de reuniões."', response: '> AC definido para 22ºC\n> Luzes em modo Foco (80%)\n> Vidros opacos ativados' },
-    { text: '"Kira, vou sair."', response: '> Sistema de Segurança armado\n> Luzes apagadas\n> Modo Eco Energético ativado' },
-    { text: '"Kira, detetaste movimento?"', response: '> Movimento no Jardim às 03:14\n> Câmaras a gravar (Encriptado)\n> Luzes vermelhas ativadas' }
+  const [kiraStep, setKiraStep] = useState(0);
+  const kiraSteps = [
+    { text: '"Kira, ativar Modo Cinema."', response: 'Iniciando Modo Cinema...' },
+    { text: '"Kira, ativar Modo Cinema."', response: 'Iniciando Modo Cinema...\n> Fechando persianas' },
+    { text: '"Kira, ativar Modo Cinema."', response: 'Iniciando Modo Cinema...\n> Fechando persianas\n> Ajustando luz para 10%' },
+    { text: '"Kira, ativar Modo Cinema."', response: 'Iniciando Modo Cinema...\n> Fechando persianas\n> Ajustando luz para 10%\n> Ligando ecrã. Bom filme.' }
   ];
 
   useEffect(() => {
@@ -29,8 +30,8 @@ export default function AuraLandingPage() {
     window.addEventListener('scroll', handleScroll);
     
     const interval = setInterval(() => {
-      setKiraIndex((prev) => (prev + 1) % kiraCommands.length);
-    }, 4000);
+      setKiraStep((prev) => (prev + 1) % kiraSteps.length);
+    }, 4500);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -41,7 +42,10 @@ export default function AuraLandingPage() {
   useEffect(() => {
     if (audioEnabled && typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const textToSpeak = kiraCommands[kiraIndex].response.replace(/>/g, '').replace(/\n/g, '. ');
+      // Only speak the last added line
+      const lines = kiraSteps[kiraStep].response.split('\n');
+      const lastLine = lines[lines.length - 1];
+      const textToSpeak = lastLine.replace(/>/g, '').replace(/\n/g, '. ');
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = 'pt-PT';
       utterance.rate = 0.95;
@@ -53,7 +57,7 @@ export default function AuraLandingPage() {
 
       window.speechSynthesis.speak(utterance);
     }
-  }, [kiraIndex, audioEnabled]);
+  }, [kiraStep, audioEnabled]);
 
   return (
     <div className="min-h-screen bg-[#030303] text-white selection:bg-emerald-500/30 font-sans overflow-x-hidden">
@@ -114,7 +118,7 @@ export default function AuraLandingPage() {
         </div>
 
         {/* Hero Image / Mockup */}
-        <div className="relative w-full max-w-5xl mx-auto mt-10 perspective-[2000px] group cursor-pointer animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+        <div className="relative w-full max-w-5xl mx-auto mt-10 group cursor-pointer animate-fade-in-up" style={{ animationDelay: '400ms', perspective: '2000px' }}>
           <div 
             className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(16,185,129,0.3)] transition-all duration-1000 ease-out"
             style={{ transform: 'rotateX(20deg) scale(0.95)', transformStyle: 'preserve-3d' }}
@@ -188,31 +192,49 @@ export default function AuraLandingPage() {
             </div>
 
             <div className="relative">
-              <div className="aspect-square rounded-[3rem] bg-gradient-to-br from-[#111] to-[#050505] border border-emerald-500/20 p-8 shadow-[0_0_50px_rgba(16,185,129,0.1)] relative overflow-hidden flex flex-col items-center justify-center text-center group">
-                <div className="absolute inset-0 bg-emerald-500/5 transition-colors" />
+              <div className="aspect-square rounded-[3rem] bg-slate-900 border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)] relative overflow-hidden flex flex-col items-center justify-center text-center group">
                 
-                {/* Kira Avatar Image */}
-                <div className="relative w-40 h-40 mb-6 rounded-full border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden">
-                  <div className="absolute inset-0 bg-emerald-500/20 animate-pulse mix-blend-overlay z-10"></div>
-                  <img src="/images/kira-avatar.png" alt="Kira Avatar" className="w-full h-full object-cover" />
-                </div>
-                
-                <button 
-                  onClick={() => setAudioEnabled(!audioEnabled)}
-                  className={`mb-6 px-4 py-1.5 rounded-full text-xs font-bold transition-colors z-20 border ${audioEnabled ? 'bg-emerald-500 text-black border-emerald-500' : 'bg-transparent text-slate-400 border-white/20 hover:text-white'}`}
-                >
-                  {audioEnabled ? '🔊 Áudio Ativado' : '🔇 Ativar Voz da Kira'}
-                </button>
-                
-                {/* Interactive Terminal */}
-                <div className="h-32 flex flex-col justify-center items-center w-full z-10">
-                  <h3 key={`h3-${kiraIndex}`} className="text-2xl md:text-3xl font-black text-white mb-4 z-10 animate-fade-in-up">
-                    {kiraCommands[kiraIndex].text}
-                  </h3>
-                  <div key={`p-${kiraIndex}`} className="text-emerald-400 font-mono text-sm z-10 bg-black/80 w-full max-w-sm p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner shadow-emerald-500/10 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                    {kiraCommands[kiraIndex].response.split('\n').map((line, i) => (
-                      <span key={i} className="block">{line}</span>
+                {/* 2.5D Background Environment */}
+                <div className="absolute inset-0 transition-all duration-1000 z-0 overflow-hidden">
+                  {/* Simulated Blinds */}
+                  <div className={`absolute inset-0 flex justify-between transition-all duration-[2000ms] ease-in-out ${kiraStep >= 1 ? 'opacity-100' : 'opacity-0'}`}>
+                    {[...Array(20)].map((_, i) => (
+                      <div key={i} className="w-full h-full bg-[#050505] border-r border-black/80" style={{ transform: kiraStep >= 1 ? 'rotateY(0deg)' : 'rotateY(90deg)', transformOrigin: 'left', transition: 'transform 2s ease-in-out' }} />
                     ))}
+                  </div>
+                  {/* Simulated Dimming */}
+                  <div className={`absolute inset-0 bg-black transition-opacity duration-[2000ms] ${kiraStep >= 2 ? 'opacity-90' : 'opacity-0'}`} />
+                  {/* Simulated TV Glow */}
+                  <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-500/20 blur-[100px] transition-opacity duration-[2000ms] ${kiraStep >= 3 ? 'opacity-100' : 'opacity-0'}`} />
+                </div>
+
+                {/* Foreground Kira Avatar & Terminal */}
+                <div className="relative z-10 w-full h-full p-8 flex flex-col items-center justify-center">
+                  {/* Kira Avatar Image (Animated Hologram) */}
+                  <div className="relative w-40 h-40 mb-6 rounded-full border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.5)] overflow-hidden">
+                    <div className={`absolute inset-0 mix-blend-overlay z-10 transition-colors duration-1000 ${kiraStep >= 3 ? 'bg-blue-500/30' : 'bg-emerald-500/20'} ${audioEnabled ? 'animate-pulse' : ''}`}></div>
+                    <div className="w-full h-full animate-[pulse_3s_ease-in-out_infinite]">
+                      <img src="/images/kira-avatar.png" alt="Kira Avatar" className="w-full h-full object-cover opacity-90 scale-110" />
+                    </div>
+                  </div>
+                  
+                  <button 
+                    onClick={() => setAudioEnabled(!audioEnabled)}
+                    className={`mb-6 px-4 py-1.5 rounded-full text-xs font-bold transition-colors z-20 border ${audioEnabled ? 'bg-emerald-500 text-black border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]' : 'bg-black/50 text-slate-400 border-white/20 hover:text-white backdrop-blur-sm'}`}
+                  >
+                    {audioEnabled ? '🔊 Áudio Ativado' : '🔇 Ativar Voz da Kira'}
+                  </button>
+                  
+                  {/* Interactive Terminal */}
+                  <div className="h-[140px] flex flex-col justify-start items-center w-full z-10">
+                    <h3 className="text-2xl md:text-3xl font-black text-white mb-4 z-10 drop-shadow-lg">
+                      {kiraSteps[kiraStep].text}
+                    </h3>
+                    <div className="text-emerald-400 font-mono text-sm z-10 bg-black/80 w-full max-w-sm p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner shadow-emerald-500/10 backdrop-blur-md transition-all duration-300 min-h-[100px]">
+                      {kiraSteps[kiraStep].response.split('\n').map((line, i) => (
+                        <span key={`${kiraStep}-${i}`} className="block animate-fade-in-up">{line}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
