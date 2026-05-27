@@ -84,21 +84,27 @@ export default function AuraLandingPage() {
         </div>
 
         {/* Hero Image / Mockup */}
-        <div className="relative w-full max-w-5xl mx-auto mt-10 cursor-pointer animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+        <div className="relative w-full max-w-5xl mx-auto mt-10 cursor-pointer animate-fade-in-up z-20" style={{ animationDelay: '400ms' }}>
           <Tilt
-            tiltMaxAngleX={15}
-            tiltMaxAngleY={15}
-            perspective={2000}
-            transitionSpeed={1500}
-            scale={1.02}
+            tiltMaxAngleX={35}
+            tiltMaxAngleY={35}
+            perspective={1000}
+            transitionSpeed={1000}
+            scale={1.05}
             gyroscope={true}
+            glareEnable={true}
+            glareMaxOpacity={0.6}
+            glareColor="#10b981"
+            glarePosition="all"
+            glareBorderRadius="1.5rem"
+            trackOnWindow={true}
           >
-            <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(16,185,129,0.3)] border border-emerald-500/20 group bg-[#050505]">
+            <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.4)] border border-emerald-500/40 group bg-[#050505] transform-gpu">
               <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent z-10 pointer-events-none" />
               <img 
                 src="/images/aura-dashboard.png" 
                 alt="Aura OS Dashboard Interface" 
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-1000"
               />
             </div>
           </Tilt>
