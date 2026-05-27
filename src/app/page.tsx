@@ -13,13 +13,28 @@ export default function AuraLandingPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
+  
+  const [kiraIndex, setKiraIndex] = useState(0);
+  const kiraCommands = [
+    { text: '"Kira, prepara a sala de reuniões."', response: '> AC definido para 22ºC\n> Luzes em modo Foco (80%)\n> Vidros opacos ativados' },
+    { text: '"Kira, vou sair."', response: '> Sistema de Segurança armado\n> Luzes apagadas\n> Modo Eco Energético ativado' },
+    { text: '"Kira, detetaste movimento?"', response: '> Movimento no Jardim às 03:14\n> Câmaras a gravar (Encriptado)\n> Luzes vermelhas ativadas' }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    const interval = setInterval(() => {
+      setKiraIndex((prev) => (prev + 1) % kiraCommands.length);
+    }, 4000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -81,13 +96,22 @@ export default function AuraLandingPage() {
         </div>
 
         {/* Hero Image / Mockup */}
-        <div className="relative w-full max-w-6xl mx-auto mt-10 perspective-[2000px] animate-fade-in-up" style={{ animationDelay: '400ms' }}>
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(16,185,129,0.15)] transform rotate-x-[15deg] hover:rotate-x-[0deg] transition-all duration-1000 ease-out group">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent z-10" />
+        <div className="relative w-full max-w-6xl mx-auto mt-10 animate-fade-in-up" style={{ animationDelay: '400ms', perspective: '2000px' }}>
+          <div 
+            className="relative w-full h-[500px] md:h-[700px] rounded-3xl overflow-hidden border border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.2)] transition-all duration-1000 ease-out group"
+            style={{ transform: 'rotateX(15deg) scale(0.95)', transformStyle: 'preserve-3d' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'rotateX(0deg) scale(1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'rotateX(15deg) scale(0.95)';
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent z-10 pointer-events-none" />
             <img 
               src="/images/aura-dashboard.png" 
               alt="Aura OS Dashboard Interface" 
-              className="w-full h-full object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-1000"
+              className="w-full h-full object-contain object-top group-hover:scale-105 transition-transform duration-1000"
             />
           </div>
         </div>
@@ -146,16 +170,26 @@ export default function AuraLandingPage() {
             </div>
 
             <div className="relative">
-              <div className="aspect-square rounded-[3rem] bg-gradient-to-br from-[#111] to-[#050505] border border-white/10 p-8 shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center group">
-                <div className="absolute inset-0 bg-emerald-500/5 group-hover:bg-emerald-500/10 transition-colors" />
-                <Sparkles className="w-20 h-20 text-emerald-400 mb-8 drop-shadow-[0_0_30px_rgba(52,211,153,0.5)] animate-pulse" />
-                <h3 className="text-3xl font-black text-white mb-4 z-10">"Kira, prepara a sala de reuniões."</h3>
-                <p className="text-slate-400 font-mono text-sm z-10 bg-black/50 p-4 rounded-xl border border-white/5">
-                  &gt; AC definido para 22ºC<br/>
-                  &gt; Luzes em modo Foco (80%)<br/>
-                  &gt; Vidros opacos ativados<br/>
-                  &gt; Consumo estimado: 1.2 kW/h
-                </p>
+              <div className="aspect-square rounded-[3rem] bg-gradient-to-br from-[#111] to-[#050505] border border-emerald-500/20 p-8 shadow-[0_0_50px_rgba(16,185,129,0.1)] relative overflow-hidden flex flex-col items-center justify-center text-center group">
+                <div className="absolute inset-0 bg-emerald-500/5 transition-colors" />
+                
+                {/* Kira Avatar Image */}
+                <div className="relative w-40 h-40 mb-8 rounded-full border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden">
+                  <div className="absolute inset-0 bg-emerald-500/20 animate-pulse mix-blend-overlay z-10"></div>
+                  <img src="/images/kira-avatar.png" alt="Kira Avatar" className="w-full h-full object-cover" />
+                </div>
+                
+                {/* Interactive Terminal */}
+                <div className="h-32 flex flex-col justify-center items-center w-full z-10">
+                  <h3 key={`h3-${kiraIndex}`} className="text-2xl md:text-3xl font-black text-white mb-4 z-10 animate-fade-in-up">
+                    {kiraCommands[kiraIndex].text}
+                  </h3>
+                  <div key={`p-${kiraIndex}`} className="text-emerald-400 font-mono text-sm z-10 bg-black/80 w-full max-w-sm p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner shadow-emerald-500/10 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                    {kiraCommands[kiraIndex].response.split('\n').map((line, i) => (
+                      <span key={i} className="block">{line}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
