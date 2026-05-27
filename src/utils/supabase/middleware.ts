@@ -104,7 +104,9 @@ export async function updateSession(request: NextRequest) {
         request.nextUrl.pathname === '/root' || 
         request.nextUrl.pathname.startsWith('/root/finance') ||
         request.nextUrl.pathname.startsWith('/root/telemetry') ||
-        request.nextUrl.pathname.startsWith('/root/users')
+        request.nextUrl.pathname.startsWith('/root/users') ||
+        request.nextUrl.pathname.startsWith('/root/hr') ||
+        request.nextUrl.pathname.startsWith('/root/clients')
       ) {
         const url = request.nextUrl.clone()
         url.pathname = '/root/operations'

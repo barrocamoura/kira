@@ -39,9 +39,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <div>
+            <div className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-3">Pessoas & Receita</div>
+            <Link href="/root/hr" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition text-sm font-medium text-slate-400 hover:text-white">
+              <Users className="w-5 h-5 text-fuchsia-500" /> CHRO Human Resources
+            </Link>
+            <Link href="/root/clients" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition text-sm font-medium text-slate-400 hover:text-white">
+              <Activity className="w-5 h-5 text-indigo-400" /> CRO Client Hub
+            </Link>
+          </div>
+
+          <div>
             <div className="px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest mb-3">Operações (Tech Team)</div>
             <Link href="/root/operations" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition text-sm font-medium text-slate-400 hover:text-white">
-              <Briefcase className="w-5 h-5 text-amber-500" /> COO Helpdesk & CRM
+              <Briefcase className="w-5 h-5 text-amber-500" /> COO Helpdesk
             </Link>
           </div>
           
