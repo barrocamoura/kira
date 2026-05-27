@@ -13,6 +13,7 @@ export default function AuraLandingPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   
   const [kiraIndex, setKiraIndex] = useState(0);
   const kiraCommands = [
@@ -36,6 +37,23 @@ export default function AuraLandingPage() {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    if (audioEnabled && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const textToSpeak = kiraCommands[kiraIndex].response.replace(/>/g, '').replace(/\n/g, '. ');
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'pt-PT';
+      utterance.rate = 0.95;
+      utterance.pitch = 1.2;
+      
+      const voices = window.speechSynthesis.getVoices();
+      const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Female') || v.name.includes('Luciana') || v.name.includes('Joana') || v.name.includes('Francisca'))) || voices.find(v => v.lang.includes('pt'));
+      if (ptVoice) utterance.voice = ptVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+  }, [kiraIndex, audioEnabled]);
 
   return (
     <div className="min-h-screen bg-[#030303] text-white selection:bg-emerald-500/30 font-sans overflow-x-hidden">
@@ -96,22 +114,22 @@ export default function AuraLandingPage() {
         </div>
 
         {/* Hero Image / Mockup */}
-        <div className="relative w-full max-w-6xl mx-auto mt-10 animate-fade-in-up" style={{ animationDelay: '400ms', perspective: '2000px' }}>
+        <div className="relative w-full max-w-5xl mx-auto mt-10 perspective-[2000px] group cursor-pointer animate-fade-in-up" style={{ animationDelay: '400ms' }}>
           <div 
-            className="relative w-full h-[500px] md:h-[700px] rounded-3xl overflow-hidden border border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.2)] transition-all duration-1000 ease-out group"
-            style={{ transform: 'rotateX(15deg) scale(0.95)', transformStyle: 'preserve-3d' }}
+            className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(16,185,129,0.3)] transition-all duration-1000 ease-out"
+            style={{ transform: 'rotateX(20deg) scale(0.95)', transformStyle: 'preserve-3d' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'rotateX(0deg) scale(1)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'rotateX(15deg) scale(0.95)';
+              e.currentTarget.style.transform = 'rotateX(20deg) scale(0.95)';
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent z-10 pointer-events-none" />
             <img 
               src="/images/aura-dashboard.png" 
               alt="Aura OS Dashboard Interface" 
-              className="w-full h-full object-contain object-top group-hover:scale-105 transition-transform duration-1000"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
             />
           </div>
         </div>
@@ -174,10 +192,17 @@ export default function AuraLandingPage() {
                 <div className="absolute inset-0 bg-emerald-500/5 transition-colors" />
                 
                 {/* Kira Avatar Image */}
-                <div className="relative w-40 h-40 mb-8 rounded-full border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden">
+                <div className="relative w-40 h-40 mb-6 rounded-full border-2 border-emerald-500/50 shadow-[0_0_30px_rgba(52,211,153,0.3)] overflow-hidden">
                   <div className="absolute inset-0 bg-emerald-500/20 animate-pulse mix-blend-overlay z-10"></div>
                   <img src="/images/kira-avatar.png" alt="Kira Avatar" className="w-full h-full object-cover" />
                 </div>
+                
+                <button 
+                  onClick={() => setAudioEnabled(!audioEnabled)}
+                  className={`mb-6 px-4 py-1.5 rounded-full text-xs font-bold transition-colors z-20 border ${audioEnabled ? 'bg-emerald-500 text-black border-emerald-500' : 'bg-transparent text-slate-400 border-white/20 hover:text-white'}`}
+                >
+                  {audioEnabled ? '🔊 Áudio Ativado' : '🔇 Ativar Voz da Kira'}
+                </button>
                 
                 {/* Interactive Terminal */}
                 <div className="h-32 flex flex-col justify-center items-center w-full z-10">
