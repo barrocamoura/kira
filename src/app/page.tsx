@@ -83,29 +83,92 @@ export default function AuraLandingPage() {
           </a>
         </div>
 
-        {/* Hero Image / Mockup */}
+        {/* Hero Image / Mockup - MULTILAYER 3D DIORAMA */}
         <div className="relative w-full max-w-5xl mx-auto mt-10 cursor-pointer animate-fade-in-up z-20" style={{ animationDelay: '400ms' }}>
           <Tilt
-            tiltMaxAngleX={35}
-            tiltMaxAngleY={35}
+            tiltMaxAngleX={20}
+            tiltMaxAngleY={20}
             perspective={1000}
             transitionSpeed={1000}
             scale={1.05}
             gyroscope={true}
             glareEnable={true}
-            glareMaxOpacity={0.6}
+            glareMaxOpacity={0.4}
             glareColor="#10b981"
             glarePosition="all"
             glareBorderRadius="1.5rem"
             trackOnWindow={true}
+            className="transform-gpu preserve-3d"
           >
-            <div className="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.4)] border border-emerald-500/40 group bg-[#050505] transform-gpu">
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent z-10 pointer-events-none" />
-              <img 
-                src="/images/aura-dashboard.png" 
-                alt="Aura OS Dashboard Interface" 
-                className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-1000"
-              />
+            {/* Base Layer: Dashboard Background Container */}
+            <div 
+              className="relative w-full aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.3)] border border-emerald-500/20 bg-[#0A0A0A] transform-gpu preserve-3d"
+              style={{ transform: 'translateZ(0px)' }}
+            >
+              {/* Fake Background Blur / Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-[#0A0A0A] to-[#0A0A0A] z-0" />
+              
+              {/* Layer 1: Sidebar (Translated in Z) */}
+              <div 
+                className="absolute top-0 left-0 bottom-0 w-1/4 bg-[#111]/80 backdrop-blur-md border-r border-white/5 z-10 flex flex-col p-4 space-y-4"
+                style={{ transform: 'translateZ(20px)' }}
+              >
+                <div className="h-8 w-24 bg-emerald-500/20 rounded-md mb-8" />
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="h-6 w-full bg-white/5 rounded-md" />
+                ))}
+              </div>
+
+              {/* Layer 2: Main Content Area Header */}
+              <div 
+                className="absolute top-0 left-[25%] right-0 h-20 border-b border-white/5 flex items-center px-8 z-10"
+                style={{ transform: 'translateZ(30px)' }}
+              >
+                <div className="h-8 w-48 bg-white/10 rounded-md" />
+                <div className="ml-auto h-10 w-10 bg-emerald-500/20 rounded-full" />
+              </div>
+
+              {/* Layer 3: Floating Stats Cards */}
+              <div className="absolute top-28 left-[28%] right-8 grid grid-cols-3 gap-6 z-20">
+                {[
+                  { z: 40, color: 'from-emerald-500/20' },
+                  { z: 60, color: 'from-blue-500/20' },
+                  { z: 50, color: 'from-purple-500/20' }
+                ].map((card, i) => (
+                  <div 
+                    key={i} 
+                    className={`h-32 rounded-2xl border border-white/10 bg-gradient-to-br ${card.color} to-transparent backdrop-blur-xl p-4 flex flex-col justify-between shadow-xl`}
+                    style={{ transform: `translateZ(${card.z}px)` }}
+                  >
+                    <div className="h-4 w-1/2 bg-white/20 rounded" />
+                    <div className="h-8 w-3/4 bg-white/40 rounded mt-auto" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Layer 4: Main Graph / Dashboard Widget - Pops out the most */}
+              <div 
+                className="absolute top-64 left-[28%] right-8 bottom-8 rounded-2xl border border-emerald-500/30 bg-[#050505]/90 backdrop-blur-2xl z-30 p-6 flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                style={{ transform: 'translateZ(90px)' }}
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <div className="h-6 w-32 bg-white/10 rounded" />
+                  <div className="h-6 w-24 bg-emerald-500/20 rounded" />
+                </div>
+                {/* Fake Graph Lines */}
+                <div className="flex-1 flex items-end space-x-2">
+                  {[40, 60, 30, 80, 50, 90, 70, 100].map((h, i) => (
+                    <div 
+                      key={i} 
+                      className="flex-1 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t-sm"
+                      style={{ height: `${h}%`, opacity: 0.8 }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Holographic Overlay / Glare */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent pointer-events-none z-50" style={{ transform: 'translateZ(100px)' }} />
             </div>
           </Tilt>
         </div>

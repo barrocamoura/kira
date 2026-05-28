@@ -1,8 +1,76 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+import * as THREE from 'three';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, Environment, Float, ContactShadows, PresentationControls, Html } from '@react-three/drei';
 import { useInView } from 'framer-motion';
-import Tilt from 'react-parallax-tilt';
+
+// Generic 3D Robot Model from pmndrs market
+const ROBOT_GLTF_URL = 'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/robot/model.gltf';
+
+// Pre-load the 3D model
+useGLTF.preload(ROBOT_GLTF_URL);
+
+// The 3D Robot Component
+function RobotAvatar({ isSpeaking, step }: { isSpeaking: boolean, step: number }) {
+  const { scene } = useGLTF(ROBOT_GLTF_URL);
+  const robotRef = useRef<any>(null);
+
+  useFrame((state) => {
+    if (robotRef.current) {
+      // Gentle floating and breathing animation based on speaking state
+      const t = state.clock.getElapsedTime();
+      robotRef.current.position.y = Math.sin(t * (isSpeaking ? 4 : 2)) * 0.1;
+      
+      // Look at the mouse cursor
+      robotRef.current.rotation.y = THREE.MathUtils.lerp(
+        robotRef.current.rotation.y,
+        (state.mouse.x * Math.PI) / 4,
+        0.1
+      );
+      robotRef.current.rotation.x = THREE.MathUtils.lerp(
+        robotRef.current.rotation.x,
+        (-state.mouse.y * Math.PI) / 4,
+        0.1
+      );
+    }
+  });
+
+  // Change robot color dynamically based on step
+  useEffect(() => {
+    scene.traverse((child: any) => {
+      if (child.isMesh && child.material && child.material.name === 'Main') {
+        const color = step >= 3 ? '#3b82f6' : '#10b981';
+        child.material.color.set(color);
+        if (isSpeaking) {
+          child.material.emissive.set(color);
+          child.material.emissiveIntensity = 0.5 + Math.sin(Date.now() * 0.01) * 0.5;
+        } else {
+          child.material.emissiveIntensity = 0;
+        }
+      }
+    });
+  }, [isSpeaking, step, scene]);
+
+  return (
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+      <primitive ref={robotRef} object={scene} scale={1.5} position={[0, -1, 0]} />
+    </Float>
+  );
+}
+
+// 3D Loader
+function Loader() {
+  return (
+    <Html center>
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4" />
+        <span className="text-emerald-500 font-mono text-sm tracking-widest">A Carregar Kira 3D...</span>
+      </div>
+    </Html>
+  );
+}
 
 // Kira Commands Sequence
 const kiraSteps = [
@@ -20,16 +88,34 @@ export default function Kira3D() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioUnlocked, setAudioUnlocked] = useState(false);
 
-  // Global click to unlock audio context smoothly
+  // GLOBAL AUDIO BYPASS: Unlock audio context on the first click ANYWHERE on the page!
+  // This removes the need for an ugly button overlay on the Kira section.
   useEffect(() => {
     const handleGlobalClick = () => {
-      setAudioUnlocked(true);
-      window.removeEventListener('click', handleGlobalClick);
+      if (!audioUnlocked) {
+        // Create an empty audio context to unlock browser policy
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContext) {
+          const ctx = new AudioContext();
+          ctx.resume().then(() => {
+            setAudioUnlocked(true);
+            window.removeEventListener('click', handleGlobalClick);
+            window.removeEventListener('touchstart', handleGlobalClick);
+          });
+        }
+      }
     };
+    
     window.addEventListener('click', handleGlobalClick);
-    return () => window.removeEventListener('click', handleGlobalClick);
-  }, []);
+    window.addEventListener('touchstart', handleGlobalClick);
+    
+    return () => {
+      window.removeEventListener('click', handleGlobalClick);
+      window.removeEventListener('touchstart', handleGlobalClick);
+    };
+  }, [audioUnlocked]);
 
+  // Command Progression Logic
   useEffect(() => {
     let interval: any;
     
@@ -44,7 +130,7 @@ export default function Kira3D() {
     return () => clearInterval(interval);
   }, [isInView]);
 
-  // Voice Synth logic
+  // Voice Synth logic (Autoplays ONLY if audio is unlocked)
   useEffect(() => {
     if (audioUnlocked && isInView && typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -74,56 +160,34 @@ export default function Kira3D() {
   }, [kiraStep, isInView, audioUnlocked]);
 
   return (
-    <div ref={containerRef} className="relative w-full aspect-square md:aspect-video rounded-[3rem] bg-[#050505] border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)] overflow-hidden flex flex-col items-center justify-center group">
+    <div ref={containerRef} className="relative w-full aspect-square md:aspect-video rounded-[3rem] bg-[#050505] border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)] overflow-hidden flex flex-col group">
       
-      {!audioUnlocked && (
-        <div className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center transition-opacity duration-500" onClick={() => setAudioUnlocked(true)}>
-          <button className="px-8 py-4 bg-emerald-500 text-black font-black text-lg rounded-full animate-pulse shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:scale-105 transition-transform">
-            Iniciar Experiência Interativa
-          </button>
-          <p className="text-slate-400 mt-4 text-sm max-w-sm text-center">O seu browser necessita de uma interação inicial para desbloquear a voz da IA.</p>
-        </div>
-      )}
-
-      {/* 3D Hologram Avatar Layer */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 overflow-hidden">
-        {/* Background Environment Simulator */}
-        <div className={`absolute inset-0 transition-opacity duration-2000 ${kiraStep >= 2 ? 'opacity-30' : 'opacity-10'}`}>
-          <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/20 via-[#050505] to-[#050505]" />
-        </div>
-        {/* TV Glow */}
-        <div className={`absolute w-full h-full bg-blue-500/20 blur-[100px] transition-opacity duration-2000 ${kiraStep >= 3 ? 'opacity-100' : 'opacity-0'}`} />
-
-        <Tilt
-          tiltMaxAngleX={20}
-          tiltMaxAngleY={20}
-          perspective={1000}
-          transitionSpeed={1000}
-          scale={1.1}
-          gyroscope={true}
-          className="z-10"
-        >
-          {/* Avatar Container with 3D Depth */}
-          <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-emerald-500/50 shadow-[0_0_50px_rgba(52,211,153,0.5)] flex items-center justify-center transform-gpu">
-            {/* Hologram rings */}
-            <div className={`absolute inset-[-20%] rounded-full border-2 border-emerald-400/30 animate-[spin_10s_linear_infinite] ${isSpeaking ? 'border-emerald-400/80 scale-110 shadow-[0_0_30px_rgba(16,185,129,0.4)]' : ''} transition-all duration-500`} style={{ transform: 'translateZ(-50px)' }} />
-            <div className={`absolute inset-[-40%] rounded-full border border-blue-400/20 animate-[spin_15s_linear_infinite_reverse] ${kiraStep >= 3 ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`} style={{ transform: 'translateZ(-100px)' }} />
-            
-            {/* Core Image */}
-            <div className="w-full h-full rounded-full overflow-hidden relative bg-black" style={{ transform: 'translateZ(50px)' }}>
-              <div className={`absolute inset-0 mix-blend-overlay z-10 transition-colors duration-1000 ${kiraStep >= 3 ? 'bg-blue-500/40' : 'bg-emerald-500/30'} ${isSpeaking ? 'animate-pulse' : ''}`} />
-              <img 
-                src="/images/kira-avatar.png" 
-                alt="Kira Avatar" 
-                className="w-full h-full object-cover opacity-90 scale-110 hover:scale-125 transition-transform duration-1000" 
-              />
-            </div>
-          </div>
-        </Tilt>
+      {/* 3D WebGL Canvas Layer - The True Avatar */}
+      <div className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing">
+        <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
+          <Environment preset="city" />
+          
+          <PresentationControls 
+            global 
+            config={{ mass: 2, tension: 500 }} 
+            snap={{ mass: 4, tension: 1500 }} 
+            rotation={[0, 0.3, 0]} 
+            polar={[-Math.PI / 3, Math.PI / 3]} 
+            azimuth={[-Math.PI / 1.4, Math.PI / 2]}
+          >
+            <Suspense fallback={<Loader />}>
+              <RobotAvatar isSpeaking={isSpeaking} step={kiraStep} />
+            </Suspense>
+          </PresentationControls>
+          
+          <ContactShadows position={[0, -1.5, 0]} opacity={0.5} scale={10} blur={2} far={4} />
+        </Canvas>
       </div>
 
       {/* UI Overlay */}
-      <div className="relative z-20 w-full h-full p-8 flex flex-col justify-between pointer-events-none">
+      <div className="relative z-10 p-8 flex flex-col justify-between h-full pointer-events-none">
         
         {/* Status Indicator */}
         <div className="self-start flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
@@ -132,18 +196,25 @@ export default function Kira3D() {
             <span className={`relative inline-flex rounded-full h-2 w-2 ${isSpeaking ? 'bg-emerald-500' : 'bg-slate-500'}`}></span>
           </span>
           <span className="text-xs font-bold text-white uppercase tracking-widest">
-            {isSpeaking ? 'Kira AI (A Falar)' : 'Kira AI (Standby)'}
+            {isSpeaking ? 'Kira 3D (A Processar)' : 'Kira 3D (Standby)'}
           </span>
         </div>
 
+        {/* Warning if audio not unlocked yet */}
+        {!audioUnlocked && (
+          <div className="absolute top-8 right-8 bg-red-500/10 border border-red-500/50 text-red-400 text-xs px-3 py-1 rounded-full animate-pulse">
+            Voz bloqueada pelo browser. Clique algures para ativar.
+          </div>
+        )}
+
         {/* Interactive Terminal Overlay */}
-        <div className="w-full max-w-xl mx-auto bg-black/80 backdrop-blur-xl p-6 rounded-3xl border border-white/10 shadow-2xl mt-auto translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-          <h3 className="text-xl md:text-3xl font-black text-white mb-4 drop-shadow-lg leading-tight">
+        <div className="w-full max-w-lg mx-auto bg-black/80 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl mt-auto">
+          <h3 className="text-xl md:text-2xl font-black text-white mb-4 drop-shadow-lg">
             {kiraSteps[kiraStep].text}
           </h3>
-          <div className="text-emerald-400 font-mono text-sm md:text-base bg-black/50 w-full p-4 md:p-6 rounded-2xl border border-emerald-500/20 text-left shadow-inner min-h-[140px] flex flex-col justify-end">
+          <div className="text-emerald-400 font-mono text-sm bg-black w-full p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner min-h-[120px]">
             {kiraSteps[kiraStep].response.split('\n').map((line, i) => (
-              <span key={`${kiraStep}-${i}`} className="block animate-fade-in-up" style={{ animationDelay: `${i * 150}ms` }}>{line}</span>
+              <span key={`${kiraStep}-${i}`} className="block animate-fade-in-up" style={{ animationDelay: '100ms' }}>{line}</span>
             ))}
           </div>
         </div>
