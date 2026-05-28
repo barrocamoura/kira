@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
-import { X, Shield, Zap, Target, Sparkles, ChevronRight, BrainCircuit, Globe, Workflow } from 'lucide-react';
+import { X, Shield, Zap, Target, Sparkles, ChevronRight, BrainCircuit, Globe, Workflow, Activity } from 'lucide-react';
 import Tilt from 'react-parallax-tilt';
 import dynamic from 'next/dynamic';
 const Kira3D = dynamic(() => import('@/components/Kira3D'), { ssr: false });
@@ -112,60 +112,109 @@ export default function AuraLandingPage() {
               
               {/* Layer 1: Sidebar (Translated in Z) */}
               <div 
-                className="absolute top-0 left-0 bottom-0 w-1/4 bg-[#111]/80 backdrop-blur-md border-r border-white/5 z-10 flex flex-col p-4 space-y-4"
+                className="absolute top-0 left-0 bottom-0 w-1/4 bg-[#111]/80 backdrop-blur-md border-r border-white/5 z-10 flex flex-col p-6 space-y-6"
                 style={{ transform: 'translateZ(20px)' }}
               >
-                <div className="h-8 w-24 bg-emerald-500/20 rounded-md mb-8" />
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="h-6 w-full bg-white/5 rounded-md" />
-                ))}
+                <div className="flex items-center space-x-3 mb-6">
+                  <BrainCircuit className="w-8 h-8 text-emerald-500" />
+                  <span className="text-white font-bold text-lg tracking-wider">AURA OS</span>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { icon: <Activity className="w-5 h-5" />, label: 'Dashboard', active: true },
+                    { icon: <Zap className="w-5 h-5" />, label: 'Automações' },
+                    { icon: <Shield className="w-5 h-5" />, label: 'Segurança' },
+                    { icon: <Globe className="w-5 h-5" />, label: 'Rede' },
+                    { icon: <Workflow className="w-5 h-5" />, label: 'Integrações' }
+                  ].map((item, i) => (
+                    <div key={i} className={`flex items-center space-x-3 p-3 rounded-xl transition-colors ${item.active ? 'bg-emerald-500/20 text-emerald-400' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                      {item.icon}
+                      <span className="font-medium text-sm">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Layer 2: Main Content Area Header */}
               <div 
-                className="absolute top-0 left-[25%] right-0 h-20 border-b border-white/5 flex items-center px-8 z-10"
+                className="absolute top-0 left-[25%] right-0 h-24 border-b border-white/5 flex items-center justify-between px-10 z-10"
                 style={{ transform: 'translateZ(30px)' }}
               >
-                <div className="h-8 w-48 bg-white/10 rounded-md" />
-                <div className="ml-auto h-10 w-10 bg-emerald-500/20 rounded-full" />
+                <div>
+                  <h2 className="text-2xl font-bold text-white">Visão Geral</h2>
+                  <p className="text-sm text-slate-400">Estado dos sistemas do edifício em tempo real</p>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <div className="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/30">
+                    SISTEMA ONLINE
+                  </div>
+                  <div className="h-10 w-10 rounded-full border-2 border-slate-700 overflow-hidden">
+                    <img src="https://i.pravatar.cc/100?img=33" alt="User" className="w-full h-full object-cover" />
+                  </div>
+                </div>
               </div>
 
               {/* Layer 3: Floating Stats Cards */}
-              <div className="absolute top-28 left-[28%] right-8 grid grid-cols-3 gap-6 z-20">
+              <div className="absolute top-32 left-[28%] right-8 grid grid-cols-3 gap-6 z-20">
                 {[
-                  { z: 40, color: 'from-emerald-500/20' },
-                  { z: 60, color: 'from-blue-500/20' },
-                  { z: 50, color: 'from-purple-500/20' }
+                  { title: 'Eficiência Energética', value: '94%', trend: '+2.4%', color: 'text-emerald-400', bg: 'from-emerald-500/20' },
+                  { title: 'Dispositivos Ativos', value: '1,248', trend: '+12', color: 'text-blue-400', bg: 'from-blue-500/20' },
+                  { title: 'Ameaças Bloqueadas', value: '0', trend: 'Seguro', color: 'text-purple-400', bg: 'from-purple-500/20' }
                 ].map((card, i) => (
                   <div 
                     key={i} 
-                    className={`h-32 rounded-2xl border border-white/10 bg-gradient-to-br ${card.color} to-transparent backdrop-blur-xl p-4 flex flex-col justify-between shadow-xl`}
-                    style={{ transform: `translateZ(${card.z}px)` }}
+                    className={`h-36 rounded-2xl border border-white/10 bg-gradient-to-br ${card.bg} to-black/50 backdrop-blur-xl p-6 flex flex-col justify-between shadow-2xl`}
+                    style={{ transform: `translateZ(${40 + i * 10}px)` }}
                   >
-                    <div className="h-4 w-1/2 bg-white/20 rounded" />
-                    <div className="h-8 w-3/4 bg-white/40 rounded mt-auto" />
+                    <span className="text-sm font-medium text-slate-400">{card.title}</span>
+                    <div className="flex items-end justify-between">
+                      <span className="text-4xl font-black text-white">{card.value}</span>
+                      <span className={`text-sm font-bold ${card.color}`}>{card.trend}</span>
+                    </div>
                   </div>
                 ))}
               </div>
 
-              {/* Layer 4: Main Graph / Dashboard Widget - Pops out the most */}
+              {/* Layer 4: Main Graph / Dashboard Widget */}
               <div 
-                className="absolute top-64 left-[28%] right-8 bottom-8 rounded-2xl border border-emerald-500/30 bg-[#050505]/90 backdrop-blur-2xl z-30 p-6 flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                className="absolute top-72 left-[28%] right-8 bottom-8 rounded-2xl border border-emerald-500/30 bg-[#050505]/95 backdrop-blur-2xl z-30 p-8 flex flex-col shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
                 style={{ transform: 'translateZ(90px)' }}
               >
-                <div className="flex justify-between items-center mb-6">
-                  <div className="h-6 w-32 bg-white/10 rounded" />
-                  <div className="h-6 w-24 bg-emerald-500/20 rounded" />
+                <div className="flex justify-between items-center mb-8">
+                  <h3 className="text-lg font-bold text-white">Consumo nas Últimas 24h</h3>
+                  <select className="bg-black border border-white/10 text-white text-sm rounded-lg px-3 py-1 outline-none">
+                    <option>Hoje</option>
+                    <option>Esta Semana</option>
+                  </select>
                 </div>
-                {/* Fake Graph Lines */}
-                <div className="flex-1 flex items-end space-x-2">
-                  {[40, 60, 30, 80, 50, 90, 70, 100].map((h, i) => (
-                    <div 
-                      key={i} 
-                      className="flex-1 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t-sm"
-                      style={{ height: `${h}%`, opacity: 0.8 }}
+                {/* SVG Line Chart to look realistic */}
+                <div className="flex-1 relative w-full h-full">
+                  <svg viewBox="0 0 100 30" className="w-full h-full preserve-3d overflow-visible" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path 
+                      d="M0,30 L0,15 C5,10 10,25 15,20 C20,15 25,5 30,12 C35,19 40,22 45,15 C50,8 55,10 60,18 C65,26 70,12 75,10 C80,8 85,20 90,15 C95,10 100,5 100,5 L100,30 Z" 
+                      fill="url(#chart-gradient)" 
                     />
-                  ))}
+                    <path 
+                      d="M0,15 C5,10 10,25 15,20 C20,15 25,5 30,12 C35,19 40,22 45,15 C50,8 55,10 60,18 C65,26 70,12 75,10 C80,8 85,20 90,15 C95,10 100,5 100,5" 
+                      fill="none" 
+                      stroke="#10b981" 
+                      strokeWidth="0.5"
+                      className="drop-shadow-[0_0_5px_rgba(16,185,129,0.8)]"
+                    />
+                    {/* Data Points */}
+                    {[
+                      { x: 15, y: 20 }, { x: 30, y: 12 }, { x: 45, y: 15 }, 
+                      { x: 60, y: 18 }, { x: 75, y: 10 }, { x: 90, y: 15 }
+                    ].map((p, i) => (
+                      <circle key={i} cx={p.x} cy={p.y} r="1" fill="#fff" className="animate-pulse" />
+                    ))}
+                  </svg>
                 </div>
               </div>
 

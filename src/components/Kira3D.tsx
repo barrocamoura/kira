@@ -101,22 +101,28 @@ export default function Kira3D() {
   const [kiraStep, setKiraStep] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioUnlocked, setAudioUnlocked] = useState(false);
-
-  // GLOBAL AUDIO BYPASS: Unlock audio context on the first click ANYWHERE on the page!
-  // This removes the need for an ugly button overlay on the Kira section.
+  
+  // GLOBAL AUDIO BYPASS: Unlock audio context and Speech API robustly
   useEffect(() => {
     const handleGlobalClick = () => {
       if (!audioUnlocked) {
-        // Create an empty audio context to unlock browser policy
+        // Unlock Web Audio API
         const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
         if (AudioContext) {
           const ctx = new AudioContext();
-          ctx.resume().then(() => {
-            setAudioUnlocked(true);
-            window.removeEventListener('click', handleGlobalClick);
-            window.removeEventListener('touchstart', handleGlobalClick);
-          });
+          ctx.resume();
         }
+        
+        // Unlock SpeechSynthesis API with a silent dummy utterance
+        if ('speechSynthesis' in window) {
+          const dummy = new SpeechSynthesisUtterance('');
+          dummy.volume = 0;
+          window.speechSynthesis.speak(dummy);
+        }
+
+        setAudioUnlocked(true);
+        window.removeEventListener('click', handleGlobalClick);
+        window.removeEventListener('touchstart', handleGlobalClick);
       }
     };
     
@@ -132,23 +138,20 @@ export default function Kira3D() {
   // Command Progression Logic
   useEffect(() => {
     let interval: any;
-    
     if (isInView) {
       interval = setInterval(() => {
         setKiraStep((prev) => (prev + 1) % kiraSteps.length);
-      }, 4500);
+      }, 5000);
     } else {
       setKiraStep(0);
     }
-
     return () => clearInterval(interval);
   }, [isInView]);
 
-  // Voice Synth logic (Autoplays ONLY if audio is unlocked)
+  // Voice Synth logic
   useEffect(() => {
     if (audioUnlocked && isInView && typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      
       setIsSpeaking(true);
       
       const lines = kiraSteps[kiraStep].response.split('\n');
@@ -161,7 +164,7 @@ export default function Kira3D() {
       utterance.pitch = 1.2;
       
       const voices = window.speechSynthesis.getVoices();
-      const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Female') || v.name.includes('Luciana') || v.name.includes('Joana') || v.name.includes('Francisca'))) || voices.find(v => v.lang.includes('pt'));
+      const ptVoice = voices.find(v => v.lang.includes('pt') && (v.name.includes('Female') || v.name.includes('Luciana') || v.name.includes('Joana'))) || voices.find(v => v.lang.includes('pt'));
       if (ptVoice) utterance.voice = ptVoice;
 
       utterance.onend = () => setIsSpeaking(false);
@@ -174,11 +177,11 @@ export default function Kira3D() {
   }, [kiraStep, isInView, audioUnlocked]);
 
   return (
-    <div ref={containerRef} className="relative w-full aspect-square md:aspect-video rounded-[3rem] bg-[#050505] border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)] overflow-hidden flex flex-col group">
+    <div ref={containerRef} className="relative w-full h-[600px] md:h-[700px] rounded-[3rem] bg-[#050505] border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.1)] overflow-hidden flex flex-col group">
       
       {/* 3D WebGL Canvas Layer - The True Avatar */}
       <div className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing">
-        <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+        <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
           <Environment preset="city" />
@@ -191,7 +194,7 @@ export default function Kira3D() {
             polar={[-Math.PI / 3, Math.PI / 3]} 
             azimuth={[-Math.PI / 1.4, Math.PI / 2]}
           >
-            <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Html center><span className="text-emerald-500 font-mono text-sm">A Carregar Kira...</span></Html>}>
               <RobotAvatar isSpeaking={isSpeaking} step={kiraStep} />
             </Suspense>
           </PresentationControls>
@@ -200,35 +203,35 @@ export default function Kira3D() {
         </Canvas>
       </div>
 
-      {/* UI Overlay */}
-      <div className="relative z-10 p-8 flex flex-col justify-between h-full pointer-events-none">
+      {/* UI Overlay - Using pointer-events-none so we can interact with 3D behind it */}
+      <div className="relative z-10 w-full h-full pointer-events-none p-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
         
-        {/* Status Indicator */}
-        <div className="self-start flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+        {/* Top Left Status Indicator */}
+        <div className="absolute top-8 left-8 flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-auto">
           <span className="relative flex h-2 w-2">
             {isSpeaking && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>}
             <span className={`relative inline-flex rounded-full h-2 w-2 ${isSpeaking ? 'bg-emerald-500' : 'bg-slate-500'}`}></span>
           </span>
           <span className="text-xs font-bold text-white uppercase tracking-widest">
-            {isSpeaking ? 'Kira 3D (A Processar)' : 'Kira 3D (Standby)'}
+            {isSpeaking ? 'Kira 3D (Ativa)' : 'Kira 3D (Standby)'}
           </span>
         </div>
 
         {/* Warning if audio not unlocked yet */}
         {!audioUnlocked && (
-          <div className="absolute top-8 right-8 bg-red-500/10 border border-red-500/50 text-red-400 text-xs px-3 py-1 rounded-full animate-pulse">
-            Voz bloqueada pelo browser. Clique algures para ativar.
+          <div className="absolute top-8 right-8 bg-amber-500/10 border border-amber-500/50 text-amber-400 text-xs px-3 py-1 rounded-full animate-pulse pointer-events-auto">
+            Voz bloqueada. Clique na página para ativar áudio.
           </div>
         )}
 
-        {/* Interactive Terminal Overlay */}
-        <div className="w-full max-w-lg mx-auto bg-black/80 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl mt-auto">
-          <h3 className="text-xl md:text-2xl font-black text-white mb-4 drop-shadow-lg">
+        {/* Interactive Terminal Overlay (Moved to the left/bottom to unblock the robot) */}
+        <div className="pointer-events-auto w-full md:w-96 bg-black/80 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-2xl mt-auto md:mt-0">
+          <h3 className="text-lg font-black text-white mb-3 drop-shadow-lg">
             {kiraSteps[kiraStep].text}
           </h3>
-          <div className="text-emerald-400 font-mono text-sm bg-black w-full p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner min-h-[120px]">
+          <div className="text-emerald-400 font-mono text-xs md:text-sm bg-[#0a0a0a] w-full p-4 rounded-xl border border-emerald-500/20 text-left shadow-inner h-[140px] overflow-hidden flex flex-col justify-end">
             {kiraSteps[kiraStep].response.split('\n').map((line, i) => (
-              <span key={`${kiraStep}-${i}`} className="block animate-fade-in-up" style={{ animationDelay: '100ms' }}>{line}</span>
+              <span key={`${kiraStep}-${i}`} className="block animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>{line}</span>
             ))}
           </div>
         </div>
