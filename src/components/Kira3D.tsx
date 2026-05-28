@@ -3,59 +3,73 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, Float, ContactShadows, PresentationControls, Html } from '@react-three/drei';
+import { Environment, Float, ContactShadows, PresentationControls, Html, Sphere, Box, Torus, MeshDistortMaterial } from '@react-three/drei';
 import { useInView } from 'framer-motion';
 
-// Generic 3D Robot Model from pmndrs market
-const ROBOT_GLTF_URL = 'https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/robot/model.gltf';
-
-// Pre-load the 3D model
-useGLTF.preload(ROBOT_GLTF_URL);
-
-// The 3D Robot Component
+// The Procedural 3D Drone Component (Reliable, no external GLTF needed)
 function RobotAvatar({ isSpeaking, step }: { isSpeaking: boolean, step: number }) {
-  const { scene } = useGLTF(ROBOT_GLTF_URL);
-  const robotRef = useRef<any>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const eyeRef = useRef<THREE.Mesh>(null);
+  const coreColor = step >= 3 ? '#3b82f6' : '#10b981';
 
   useFrame((state) => {
-    if (robotRef.current) {
+    if (groupRef.current) {
       // Gentle floating and breathing animation based on speaking state
       const t = state.clock.getElapsedTime();
-      robotRef.current.position.y = Math.sin(t * (isSpeaking ? 4 : 2)) * 0.1;
+      groupRef.current.position.y = Math.sin(t * (isSpeaking ? 4 : 2)) * 0.15;
       
-      // Look at the mouse cursor
-      robotRef.current.rotation.y = THREE.MathUtils.lerp(
-        robotRef.current.rotation.y,
+      // Drone core rotates
+      groupRef.current.rotation.y += isSpeaking ? 0.05 : 0.01;
+      groupRef.current.rotation.x = Math.sin(t) * 0.1;
+
+      // Make the entire group gently follow the mouse
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
         (state.mouse.x * Math.PI) / 4,
-        0.1
+        0.05
       );
-      robotRef.current.rotation.x = THREE.MathUtils.lerp(
-        robotRef.current.rotation.x,
-        (-state.mouse.y * Math.PI) / 4,
-        0.1
-      );
+    }
+
+    // Make the eye track the mouse more aggressively
+    if (eyeRef.current) {
+      eyeRef.current.position.x = THREE.MathUtils.lerp(eyeRef.current.position.x, state.mouse.x * 0.5, 0.1);
+      eyeRef.current.position.y = THREE.MathUtils.lerp(eyeRef.current.position.y, state.mouse.y * 0.5, 0.1);
     }
   });
 
-  // Change robot color dynamically based on step
-  useEffect(() => {
-    scene.traverse((child: any) => {
-      if (child.isMesh && child.material && child.material.name === 'Main') {
-        const color = step >= 3 ? '#3b82f6' : '#10b981';
-        child.material.color.set(color);
-        if (isSpeaking) {
-          child.material.emissive.set(color);
-          child.material.emissiveIntensity = 0.5 + Math.sin(Date.now() * 0.01) * 0.5;
-        } else {
-          child.material.emissiveIntensity = 0;
-        }
-      }
-    });
-  }, [isSpeaking, step, scene]);
-
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-      <primitive ref={robotRef} object={scene} scale={1.5} position={[0, -1, 0]} />
+    <Float speed={isSpeaking ? 4 : 2} rotationIntensity={0.5} floatIntensity={isSpeaking ? 2 : 1}>
+      <group ref={groupRef} scale={1.2} position={[0, -0.5, 0]}>
+        
+        {/* Core Energy Sphere */}
+        <Sphere args={[0.6, 64, 64]}>
+          <MeshDistortMaterial 
+            color={coreColor} 
+            emissive={coreColor} 
+            emissiveIntensity={isSpeaking ? 2 : 0.5} 
+            distort={isSpeaking ? 0.4 : 0.2} 
+            speed={isSpeaking ? 5 : 2} 
+            roughness={0.2}
+            metalness={0.8}
+          />
+        </Sphere>
+
+        {/* Floating Orbital Rings */}
+        <Torus args={[1, 0.05, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
+          <meshStandardMaterial color="#333" metalness={0.9} roughness={0.1} />
+        </Torus>
+        <Torus args={[1.2, 0.02, 16, 100]} rotation={[0, Math.PI / 4, 0]}>
+          <meshStandardMaterial color={coreColor} emissive={coreColor} emissiveIntensity={0.5} />
+        </Torus>
+
+        {/* The Eye */}
+        <group position={[0, 0, 0.5]}>
+          <Sphere ref={eyeRef} args={[0.2, 32, 32]} position={[0, 0, 0.1]}>
+            <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1} />
+          </Sphere>
+        </group>
+
+      </group>
     </Float>
   );
 }
