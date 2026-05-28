@@ -6,7 +6,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { X, Shield, Zap, Target, Sparkles, ChevronRight, BrainCircuit, Globe, Workflow } from 'lucide-react';
 import Tilt from 'react-parallax-tilt';
-import Kira3D from '@/components/Kira3D';
+import dynamic from 'next/dynamic';
+const Kira3D = dynamic(() => import('@/components/Kira3D'), { ssr: false });
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function AuraLandingPage() {
@@ -98,12 +99,13 @@ export default function AuraLandingPage() {
             glarePosition="all"
             glareBorderRadius="1.5rem"
             trackOnWindow={true}
-            className="transform-gpu preserve-3d"
+            className="transform-gpu"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Base Layer: Dashboard Background Container */}
             <div 
-              className="relative w-full aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.3)] border border-emerald-500/20 bg-[#0A0A0A] transform-gpu preserve-3d"
-              style={{ transform: 'translateZ(0px)' }}
+              className="relative w-full aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.3)] border border-emerald-500/20 bg-[#0A0A0A] transform-gpu"
+              style={{ transform: 'translateZ(0px)', transformStyle: 'preserve-3d' }}
             >
               {/* Fake Background Blur / Gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-[#0A0A0A] to-[#0A0A0A] z-0" />
