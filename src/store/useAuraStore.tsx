@@ -226,36 +226,81 @@ export const AuraStoreProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("kira_cad_zones", JSON.stringify(zones));
     localStorage.setItem("kira_cad_automations", JSON.stringify(automations));
     
-    if (supabase) {
+    if (supabase && activeSiteId !== "default_site") {
       try {
-        // Defensive Upsert to Supabase
+        // 1. Save CAD data, Zones and Automations to the Space
+        const spaceData = {
+          cad_data: { devices, zones, inventory },
+          settings: { whitelabelConfig, automations }
+        };
+        
+        await supabase.from('spaces').update(spaceData).eq('id', activeSiteId);
+
+        // 2. Defensive Upsert Devices individually for quick IoT querying
         const activeDevices = devices.filter(d => (d.siteId || "default_site") === activeSiteId);
-        if (activeSiteId !== "default_site") {
-           // We only sync if it's a real site in the database
-           for (const dev of activeDevices) {
+        for (const dev of activeDevices) {
+          // If ID is a valid UUID, upsert it. Otherwise skip DB table or handle mock IDs
+          if (dev.id.length === 36) {
              await supabase.from('devices').upsert({
-               id: dev.id.length === 36 ? dev.id : undefined, // only use valid uuids or let DB generate
+               id: dev.id,
                space_id: activeSiteId,
                name: dev.name || 'Unnamed Device',
                type: dev.type,
                position_x: dev.position[0],
                position_y: dev.position[1],
                position_z: dev.position[2],
-               is_on: dev.isOn
-             }, { onConflict: 'id' }); // Catch silent errors for mock UUIDs
-           }
+               state: { isOn: dev.isOn, protocol: dev.protocol }
+             }, { onConflict: 'id' });
+          }
         }
       } catch (err) {
         console.warn("Supabase Sync Failed:", err);
       }
     } else {
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 800)); // Simulate delay for local mock
     }
     
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
     setIsSaving(false);
   };
+
+  const loadFromCloud = async () => {
+    if (!supabase) return;
+    try {
+      // Get user session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      // Fetch user's spaces
+      const { data: spacesData, error } = await supabase.from('spaces').select('*').eq('owner_id', session.user.id);
+      
+      if (!error && spacesData && spacesData.length > 0) {
+        const mappedSites = spacesData.map(s => ({ id: s.id, name: s.name, type: s.type as any }));
+        setSites(mappedSites);
+        
+        // Pick first or previously active
+        const targetSite = mappedSites.find(s => s.id === activeSiteId) ? activeSiteId : mappedSites[0].id;
+        setActiveSiteId(targetSite);
+
+        const currentSpace = spacesData.find(s => s.id === targetSite);
+        if (currentSpace) {
+          if (currentSpace.cad_data?.devices) setDevices(currentSpace.cad_data.devices);
+          if (currentSpace.cad_data?.zones) setZones(currentSpace.cad_data.zones);
+          if (currentSpace.cad_data?.inventory) setInventory(currentSpace.cad_data.inventory);
+          
+          if (currentSpace.settings?.whitelabelConfig) setWhitelabelConfig(currentSpace.settings.whitelabelConfig);
+          if (currentSpace.settings?.automations) setAutomations(currentSpace.settings.automations);
+        }
+      }
+    } catch (err) {
+      console.warn("Cloud load bypassed or failed", err);
+    }
+  };
+
+  useEffect(() => {
+    loadFromCloud();
+  }, []);
 
   return (
     <AuraStoreContext.Provider value={{
