@@ -83,18 +83,39 @@ export async function updateSession(request: NextRequest) {
       return NextResponse.redirect(url)
     }
     
-    // Check user role (is_superadmin)
+    // Check user role (is_superadmin & role)
     const { data: userData, error: dbErr } = await supabase
       .from('users')
-      .select('is_superadmin')
+      .select('is_superadmin, role')
       .eq('id', user.id)
       .maybeSingle()
       
-    if (dbErr || !userData || !userData.is_superadmin) {
-      // Not superadmin, redirect to dashboard
+    if (dbErr || !userData || (!userData.is_superadmin && !['admin', 'ceo', 'support', 'finance'].includes(userData.role))) {
+      // Not an authorized staff member, redirect to dashboard
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)
+    }
+
+    // Role-based restrictions within /root
+    if (userData.role === 'support') {
+      // Support can only access /root/operations and /root/clients
+      if (
+        request.nextUrl.pathname === '/root' || 
+        request.nextUrl.pathname.startsWith('/root/finance') ||
+        request.nextUrl.pathname.startsWith('/root/hr')
+      ) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/root/operations'
+        return NextResponse.redirect(url)
+      }
+    } else if (userData.role === 'finance') {
+      // Finance can only access /root/finance
+      if (!request.nextUrl.pathname.startsWith('/root/finance')) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/root/finance'
+        return NextResponse.redirect(url)
+      }
     }
   }
 
