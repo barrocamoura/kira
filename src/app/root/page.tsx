@@ -184,6 +184,101 @@ export default function CEODashboard() {
         </div>
 
       </div>
+
+      {/* SYSTEM HEALTH & DATABASE DIAGNOSTICS */}
+      <div className="mt-8">
+        <h3 className="text-xl font-bold text-white flex items-center gap-3 mb-6">
+          <Cpu className="w-6 h-6 text-indigo-500" />
+          System Health & Diagnostics
+        </h3>
+        <DatabaseDiagnostics />
+      </div>
+
+    </div>
+  );
+}
+
+function DatabaseDiagnostics() {
+  const [dbStatus, setDbStatus] = useState<{
+    users: string; spaces: string; devices: string; automations: string; space_members: string; lastChecked: string | null;
+  }>({
+    users: 'checking', spaces: 'checking', devices: 'checking', automations: 'checking', space_members: 'checking', lastChecked: null
+  });
+
+  const checkDb = async () => {
+    const supabase = createClient();
+    const newStatus = { users: 'checking', spaces: 'checking', devices: 'checking', automations: 'checking', space_members: 'checking', lastChecked: null as string | null };
+    setDbStatus(newStatus);
+    
+    // Check Users
+    const { error: errUsers } = await supabase.from('users').select('id').limit(1);
+    newStatus.users = errUsers ? 'error' : 'ok';
+    
+    // Check Spaces
+    const { error: errSpaces } = await supabase.from('spaces').select('id').limit(1);
+    newStatus.spaces = errSpaces ? 'error' : 'ok';
+    
+    // Check Devices
+    const { error: errDevices } = await supabase.from('devices').select('id').limit(1);
+    newStatus.devices = errDevices ? 'error' : 'ok';
+    
+    // Check Automations
+    const { error: errAutomations } = await supabase.from('automations').select('id').limit(1);
+    newStatus.automations = errAutomations ? 'error' : 'ok';
+    
+    // Check Space Members
+    const { error: errMembers } = await supabase.from('space_members').select('id').limit(1);
+    newStatus.space_members = errMembers ? 'error' : 'ok';
+
+    newStatus.lastChecked = new Date().toLocaleTimeString();
+    setDbStatus({...newStatus});
+  };
+
+  useEffect(() => {
+    checkDb();
+  }, []);
+
+  const tables = [
+    { name: 'users', label: 'Users & Profiles' },
+    { name: 'spaces', label: 'Spaces (Digital Twins)' },
+    { name: 'devices', label: 'IoT Devices' },
+    { name: 'automations', label: 'Logic & Automations' },
+    { name: 'space_members', label: 'RBAC (Space Members)' },
+  ];
+
+  return (
+    <div className="bg-slate-900/50 backdrop-blur-md border border-slate-800 rounded-3xl p-8">
+      <div className="flex justify-between items-center mb-6">
+        <p className="text-slate-400 text-sm">Testing direct read access and table availability on Supabase.</p>
+        <button onClick={checkDb} className="text-xs px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 font-bold uppercase rounded-lg transition border border-indigo-500/30">
+          Run Diagnostic Again
+        </button>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        {tables.map(table => {
+          const status = (dbStatus as any)[table.name];
+          const isOk = status === 'ok';
+          const isError = status === 'error';
+          
+          return (
+            <div key={table.name} className={`p-4 rounded-2xl border transition-colors ${isOk ? 'bg-emerald-500/10 border-emerald-500/30' : isError ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-800 border-slate-700'}`}>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">{table.label}</div>
+              <div className="flex items-center gap-2">
+                <div className={`w-3 h-3 rounded-full ${isOk ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : isError ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' : 'bg-amber-500 animate-pulse'}`} />
+                <span className={`text-sm font-bold ${isOk ? 'text-emerald-400' : isError ? 'text-red-400' : 'text-amber-400'}`}>
+                  {isOk ? 'ONLINE' : isError ? 'MISSING / ERROR' : 'CHECKING...'}
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      {dbStatus.lastChecked && (
+        <div className="mt-6 text-xs text-slate-500 text-right">
+          Last Check: {dbStatus.lastChecked}
+        </div>
+      )}
     </div>
   );
 }
