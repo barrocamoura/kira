@@ -33,27 +33,34 @@ export default function LoginPage() {
       
       if (error) throw error;
       
-      // Verifica se o user já completou o onboarding (se tem um espaço)
-      const { data: spaces } = await supabase
-        .from('spaces')
-        .select('id')
-        .eq('owner_id', data.user.id)
-        .limit(1);
-        
-      // Redireciona de acordo com o status
-      // Mesmo no login normal, redireciona para root se for superadmin. O middleware deixará passar.
-      const { data: userData } = await supabase
-        .from('users')
-        .select('is_superadmin')
-        .eq('id', data.user.id)
-        .maybeSingle();
+      if (error) throw error;
+      
+      try {
+        // Verifica se o user já completou o onboarding (se tem um espaço)
+        const { data: spaces } = await supabase
+          .from('spaces')
+          .select('id')
+          .eq('owner_id', data.user.id)
+          .limit(1);
+          
+        // Verifica se é superadmin
+        const { data: userData } = await supabase
+          .from('users')
+          .select('is_superadmin')
+          .eq('id', data.user.id)
+          .maybeSingle();
 
-      if (userData?.is_superadmin) {
-        router.push('/root');
-      } else if (spaces && spaces.length > 0) {
+        if (userData?.is_superadmin) {
+          router.push('/root');
+        } else if (spaces && spaces.length > 0) {
+          router.push('/dashboard');
+        } else {
+          router.push('/onboarding');
+        }
+      } catch (dbErr) {
+        console.warn("Tabelas não encontradas ou erro de RLS. Redirecionando para Dashboard como fallback local.", dbErr);
+        // Fallback local se a DB ainda não estiver configurada com o schema correto
         router.push('/dashboard');
-      } else {
-        router.push('/onboarding');
       }
       
     } catch (err: any) {
