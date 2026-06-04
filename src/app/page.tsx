@@ -5,9 +5,8 @@ import Image from 'next/image';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
 import { X, Shield, Zap, Target, Sparkles, ChevronRight, BrainCircuit, Globe, Workflow, Activity } from 'lucide-react';
-import Tilt from 'react-parallax-tilt';
 import dynamic from 'next/dynamic';
-const Kira3D = dynamic(() => import('@/components/Kira3D'), { ssr: false });
+const AuraCore = dynamic(() => import('@/components/Kira3D'), { ssr: false });
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function AuraLandingPage() {
@@ -84,144 +83,105 @@ export default function AuraLandingPage() {
           </a>
         </div>
 
-        {/* Hero Image / Mockup - MULTILAYER 3D DIORAMA */}
-        <div className="relative w-full max-w-5xl mx-auto mt-10 cursor-pointer animate-fade-in-up z-20" style={{ animationDelay: '400ms' }}>
-          <Tilt
-            tiltMaxAngleX={20}
-            tiltMaxAngleY={20}
-            perspective={1000}
-            transitionSpeed={1000}
-            scale={1.05}
-            gyroscope={true}
-            glareEnable={true}
-            glareMaxOpacity={0.4}
-            glareColor="#10b981"
-            glarePosition="all"
-            glareBorderRadius="1.5rem"
-            trackOnWindow={true}
-            className="transform-gpu"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            {/* Base Layer: Dashboard Background Container */}
-            <div 
-              className="relative w-full aspect-video md:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_0_150px_rgba(16,185,129,0.3)] border border-emerald-500/20 bg-[#0A0A0A] transform-gpu"
-              style={{ transform: 'translateZ(0px)', transformStyle: 'preserve-3d' }}
-            >
-              {/* Fake Background Blur / Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 via-[#0A0A0A] to-[#0A0A0A] z-0" />
-              
-              {/* Layer 1: Sidebar (Translated in Z) */}
-              <div 
-                className="absolute top-0 left-0 bottom-0 w-1/4 bg-[#111]/80 backdrop-blur-md border-r border-white/5 z-10 flex flex-col p-6 space-y-6"
-                style={{ transform: 'translateZ(20px)' }}
-              >
-                <div className="flex items-center space-x-3 mb-6">
-                  <BrainCircuit className="w-8 h-8 text-emerald-500" />
-                  <span className="text-white font-bold text-lg tracking-wider">AURA OS</span>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { icon: <Activity className="w-5 h-5" />, label: 'Dashboard', active: true },
-                    { icon: <Zap className="w-5 h-5" />, label: 'Automações' },
-                    { icon: <Shield className="w-5 h-5" />, label: 'Segurança' },
-                    { icon: <Globe className="w-5 h-5" />, label: 'Rede' },
-                    { icon: <Workflow className="w-5 h-5" />, label: 'Integrações' }
-                  ].map((item, i) => (
-                    <div key={i} className={`flex items-center space-x-3 p-3 rounded-xl transition-colors ${item.active ? 'bg-emerald-500/20 text-emerald-400' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
-                      {item.icon}
-                      <span className="font-medium text-sm">{item.label}</span>
-                    </div>
-                  ))}
-                </div>
+        {/* Hero Image / Mockup - ULTRA PREMIUM FLAT DASHBOARD */}
+        <div className="relative w-full max-w-6xl mx-auto mt-16 animate-fade-in-up z-20" style={{ animationDelay: '400ms' }}>
+          
+          <div className="relative w-full aspect-[16/9] rounded-[2rem] bg-[#050505]/80 backdrop-blur-3xl border border-white/10 shadow-[0_0_100px_rgba(16,185,129,0.15)] flex overflow-hidden ring-1 ring-white/5">
+            
+            {/* Top Mac-style bar */}
+            <div className="absolute top-0 left-0 right-0 h-12 bg-white/5 border-b border-white/5 flex items-center px-6 z-20">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-slate-700"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-700"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-700"></div>
               </div>
+              <div className="mx-auto text-xs font-semibold text-slate-500 tracking-wider">AURA_OS_DASHBOARD_V2.0</div>
+            </div>
 
-              {/* Layer 2: Main Content Area Header */}
-              <div 
-                className="absolute top-0 left-[25%] right-0 h-24 border-b border-white/5 flex items-center justify-between px-10 z-10"
-                style={{ transform: 'translateZ(30px)' }}
-              >
+            {/* Sidebar */}
+            <div className="w-64 bg-[#0a0a0a]/90 border-r border-white/5 flex flex-col pt-20 pb-6 px-4 z-10">
+              <div className="flex items-center space-x-3 mb-10 px-2">
+                <BrainCircuit className="w-6 h-6 text-emerald-500" />
+                <span className="text-white font-bold tracking-wider">AURA OS</span>
+              </div>
+              <div className="space-y-2">
+                {[
+                  { icon: <Activity className="w-4 h-4" />, label: 'Visão Geral', active: true },
+                  { icon: <Zap className="w-4 h-4" />, label: 'Automações' },
+                  { icon: <Shield className="w-4 h-4" />, label: 'Segurança' },
+                  { icon: <Globe className="w-4 h-4" />, label: 'Rede IoT' },
+                  { icon: <Workflow className="w-4 h-4" />, label: 'Integrações' }
+                ].map((item, i) => (
+                  <div key={i} className={`flex items-center space-x-3 p-3 rounded-xl transition-colors cursor-pointer ${item.active ? 'bg-emerald-500/10 text-emerald-400 font-semibold' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+                    {item.icon}
+                    <span className="text-sm">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Main Area */}
+            <div className="flex-1 bg-[#050505]/50 pt-20 px-10 pb-10 flex flex-col gap-8 z-10">
+              
+              {/* Header */}
+              <div className="flex justify-between items-end">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">Visão Geral</h2>
-                  <p className="text-sm text-slate-400">Estado dos sistemas do edifício em tempo real</p>
+                  <h2 className="text-3xl font-black text-white tracking-tight mb-2">Visão Geral</h2>
+                  <p className="text-slate-400 text-sm">Estado dos sistemas do edifício em tempo real.</p>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/30">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/20">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
                     SISTEMA ONLINE
                   </div>
-                  <div className="h-10 w-10 rounded-full border-2 border-slate-700 overflow-hidden">
-                    <img src="https://i.pravatar.cc/100?img=33" alt="User" className="w-full h-full object-cover" />
-                  </div>
                 </div>
               </div>
 
-              {/* Layer 3: Floating Stats Cards */}
-              <div className="absolute top-32 left-[28%] right-8 grid grid-cols-3 gap-6 z-20">
+              {/* Stats Cards Grid */}
+              <div className="grid grid-cols-3 gap-6">
                 {[
-                  { title: 'Eficiência Energética', value: '94%', trend: '+2.4%', color: 'text-emerald-400', bg: 'from-emerald-500/20' },
-                  { title: 'Dispositivos Ativos', value: '1,248', trend: '+12', color: 'text-blue-400', bg: 'from-blue-500/20' },
-                  { title: 'Ameaças Bloqueadas', value: '0', trend: 'Seguro', color: 'text-purple-400', bg: 'from-purple-500/20' }
+                  { title: 'Eficiência Energética', value: '94%', trend: '+2.4%', trendUp: true, color: 'text-emerald-400' },
+                  { title: 'Dispositivos Ativos', value: '1,248', trend: '+12', trendUp: true, color: 'text-emerald-400' },
+                  { title: 'Ameaças Bloqueadas', value: '0', trend: 'Seguro', trendUp: true, color: 'text-slate-500' }
                 ].map((card, i) => (
-                  <div 
-                    key={i} 
-                    className={`h-36 rounded-2xl border border-white/10 bg-gradient-to-br ${card.bg} to-black/50 backdrop-blur-xl p-6 flex flex-col justify-between shadow-2xl`}
-                    style={{ transform: `translateZ(${40 + i * 10}px)` }}
-                  >
-                    <span className="text-sm font-medium text-slate-400">{card.title}</span>
+                  <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-6 flex flex-col justify-between hover:bg-white/10 transition-colors">
+                    <span className="text-sm font-medium text-slate-400 mb-4">{card.title}</span>
                     <div className="flex items-end justify-between">
-                      <span className="text-4xl font-black text-white">{card.value}</span>
+                      <span className="text-4xl font-black text-white tracking-tighter">{card.value}</span>
                       <span className={`text-sm font-bold ${card.color}`}>{card.trend}</span>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Layer 4: Main Graph / Dashboard Widget */}
-              <div 
-                className="absolute top-72 left-[28%] right-8 bottom-8 rounded-2xl border border-emerald-500/30 bg-[#050505]/95 backdrop-blur-2xl z-30 p-8 flex flex-col shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
-                style={{ transform: 'translateZ(90px)' }}
-              >
-                <div className="flex justify-between items-center mb-8">
+              {/* Main Chart Area */}
+              <div className="flex-1 bg-white/5 border border-white/5 rounded-2xl p-6 flex flex-col relative overflow-hidden">
+                <div className="flex justify-between items-center mb-6 z-10">
                   <h3 className="text-lg font-bold text-white">Consumo nas Últimas 24h</h3>
-                  <select className="bg-black border border-white/10 text-white text-sm rounded-lg px-3 py-1 outline-none">
-                    <option>Hoje</option>
-                    <option>Esta Semana</option>
-                  </select>
+                  <div className="bg-black/50 border border-white/10 text-white text-sm rounded-lg px-3 py-1">Hoje</div>
                 </div>
-                {/* SVG Line Chart to look realistic */}
-                <div className="flex-1 relative w-full h-full">
-                  <svg viewBox="0 0 100 30" className="w-full h-full preserve-3d overflow-visible" preserveAspectRatio="none">
+                
+                {/* Clean SVG Line Chart */}
+                <div className="flex-1 relative w-full h-full z-10">
+                  <svg viewBox="0 0 100 30" className="w-full h-full overflow-visible" preserveAspectRatio="none">
                     <defs>
-                      <linearGradient id="chart-gradient" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.5" />
+                      <linearGradient id="premium-gradient" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
                         <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
                       </linearGradient>
                     </defs>
-                    <path 
-                      d="M0,30 L0,15 C5,10 10,25 15,20 C20,15 25,5 30,12 C35,19 40,22 45,15 C50,8 55,10 60,18 C65,26 70,12 75,10 C80,8 85,20 90,15 C95,10 100,5 100,5 L100,30 Z" 
-                      fill="url(#chart-gradient)" 
-                    />
-                    <path 
-                      d="M0,15 C5,10 10,25 15,20 C20,15 25,5 30,12 C35,19 40,22 45,15 C50,8 55,10 60,18 C65,26 70,12 75,10 C80,8 85,20 90,15 C95,10 100,5 100,5" 
-                      fill="none" 
-                      stroke="#10b981" 
-                      strokeWidth="0.5"
-                      className="drop-shadow-[0_0_5px_rgba(16,185,129,0.8)]"
-                    />
-                    {/* Data Points */}
-                    {[
-                      { x: 15, y: 20 }, { x: 30, y: 12 }, { x: 45, y: 15 }, 
-                      { x: 60, y: 18 }, { x: 75, y: 10 }, { x: 90, y: 15 }
-                    ].map((p, i) => (
-                      <circle key={i} cx={p.x} cy={p.y} r="1" fill="#fff" className="animate-pulse" />
-                    ))}
+                    <path d="M0,30 L0,15 C10,10 20,25 30,20 C40,15 50,5 60,12 C70,19 80,22 90,15 C95,12 100,8 100,8 L100,30 Z" fill="url(#premium-gradient)" />
+                    <path d="M0,15 C10,10 20,25 30,20 C40,15 50,5 60,12 C70,19 80,22 90,15 C95,12 100,8 100,8" fill="none" stroke="#10b981" strokeWidth="0.5" />
+                    {/* Glowing dots */}
+                    <circle cx="30" cy="20" r="0.8" fill="#fff" className="animate-pulse" />
+                    <circle cx="60" cy="12" r="0.8" fill="#fff" className="animate-pulse" />
+                    <circle cx="90" cy="15" r="0.8" fill="#fff" className="animate-pulse" />
                   </svg>
                 </div>
               </div>
 
-              {/* Holographic Overlay / Glare */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-transparent pointer-events-none z-50" style={{ transform: 'translateZ(100px)' }} />
             </div>
-          </Tilt>
+          </div>
         </div>
       </section>
 
@@ -277,9 +237,9 @@ export default function AuraLandingPage() {
               </ul>
             </div>
 
-            {/* True 3D Kira Component */}
+            {/* True Kira Component (Aura Core) */}
             <div className="relative w-full mt-10 lg:mt-0">
-              <Kira3D />
+              <AuraCore />
             </div>
           </div>
         </div>
