@@ -41,6 +41,7 @@ export default function TelemetryDashboard() {
       action: action
     };
 
+    const timestamp = new Date().toLocaleTimeString();
     try {
       const res = await fetch('/api/iot', {
         method: 'POST',
@@ -50,7 +51,6 @@ export default function TelemetryDashboard() {
       
       const result = await res.json();
       
-      const timestamp = new Date().toLocaleTimeString();
       if (res.ok) {
         setLog(prev => [`[${timestamp}] SUCESSO: ${JSON.stringify(payload)}`, ...prev]);
       } else {
