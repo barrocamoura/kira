@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     let priceId = process.env.STRIPE_PRICE_HOME || "price_mock_aura_home"; 
     
     // We can also accept an arbitrary price or look it up based on 'plan'
-    if (plan === 'enterprise') {
+    if (plan.startsWith('enterprise')) {
       priceId = process.env.STRIPE_PRICE_ENTERPRISE || "price_mock_aura_enterprise";
     }
 
