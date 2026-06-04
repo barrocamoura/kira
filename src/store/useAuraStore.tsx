@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Device, DeviceType } from "@/components/Scene3D";
-import { io, Socket } from "socket.io-client";
 import { supabase } from "@/lib/supabaseClient";
 
 export type WhitelabelConfig = {
@@ -84,10 +83,7 @@ interface AuraStoreContextProps {
 const AuraStoreContext = createContext<AuraStoreContextProps | undefined>(undefined);
 
 
-let socket: Socket | null = null;
-if (typeof window !== "undefined") {
-  socket = io("http://localhost:4000");
-}
+
 
 export const AuraStoreProvider = ({ children }: { children: ReactNode }) => {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -124,16 +120,25 @@ export const AuraStoreProvider = ({ children }: { children: ReactNode }) => {
     if (cachedZones) try { setZones(JSON.parse(cachedZones)); } catch(e) {}
     if (cachedAutomations) try { setAutomations(JSON.parse(cachedAutomations)); } catch(e) {}
 
-    if (socket) {
-      socket.on("device:state_changed", (data: any) => {
-        setDevices(prev => prev.map(d => {
-          if (d.id === data.id) {
-            return { ...d, isOn: data.state.isOn };
+    // Real-Time IoT Bridge via Supabase
+    if (supabase && activeSiteId !== "default_site") {
+      const channel = supabase
+        .channel('public:devices')
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'devices', filter: `space_id=eq.${activeSiteId}` }, (payload) => {
+          const updatedDevice = payload.new;
+          if (updatedDevice && updatedDevice.state) {
+            setDevices(prev => prev.map(d => {
+              // The database ID must match the local device ID
+              if (d.id === updatedDevice.id) {
+                return { ...d, isOn: updatedDevice.state.isOn };
+              }
+              return d;
+            }));
           }
-          return d;
-        }));
-      });
-      return () => { socket?.off("device:state_changed"); }
+        })
+        .subscribe();
+
+      return () => { supabase.removeChannel(channel); }
     }
   }, []);
 

@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"../node_modules/@react-three/drei/core/VideoTexture.js -> hls.js":{"id":null,"files":[]},"../node_modules/@react-three/drei/web/FaceLandmarker.js -> @mediapipe/tasks-vision":{"id":null,"files":[]},"app/page.tsx -> @/components/Kira3D":{"id":30758,"files":["static/chunks/758.4c65ae76290a0b2e.js"]}}';
